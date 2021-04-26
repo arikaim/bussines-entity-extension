@@ -1,0 +1,13 @@
+<div class="ui stackable tabular menu entity-edit-tabs">      
+    <div class="item link active edit-entity-tab-item" component="entity::admin.entity.form" uuid="{{ uuid }}">
+        <i class="icon stream blue"></i>
+        {{ labels.details }}     
+    </div>  
+    <div class="item link edit-entity-tab-item" component="entity::admin.entity.edit.address" uuid="{{ uuid }}">
+        <i class="address card outline icon blue"></i>
+        {{ labels.address }}     
+    </div>    
+</div>
+<div class="ui active tab basic segment" id="entity_edit_content">          
+    {{ component('entity::admin.entity.form',{ uuid: uuid }) }}       
+</div>     

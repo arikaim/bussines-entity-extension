@@ -1,0 +1,40 @@
+
+{% if uuid is not empty %}
+    {% set entity = createModel('Entity','entity').findById(uuid) %}
+{% endif %}
+{% set type = entity.type|default('person') %}
+<form class="ui form {{ class }}" id="entity_form">  
+    {% if uuid is not empty %}
+        <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">  
+    {% endif %}   
+    {% if role is not empty %}
+        <input type="hidden" name="role" id="role" value="{{ role }}">  
+    {% endif %}   
+    <div class="field required">
+        <label>{{ fields.name.label }}</label>
+        <input role="empty" type="text" name="name" id="name" {{ fields.name.placeholder|attr('placeholder') }} value="{{ entity.name }}">  
+    </div> 
+    {% if type_edit == true %}
+    <div class="inline fields">
+        <div class="field">
+            <div class="ui radio checkbox entity-type-radio" id="person_type">
+                <input type="radio" name="type" {{ (type == 'person') ? 'checked="checked"' : '' }} value="person">
+                <label>{{ fields.person.label }}</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox entity-type-radio" id="organization_type">
+                <input type="radio" name="type" value="organization" {{ (type == 'organization') ? 'checked="checked"' : '' }}>
+                <label>{{ fields.organization.label }}</label>
+            </div>  
+        </div>                
+    </div>       
+    {% else %}
+        <div class="field">
+            <div class="ui basic label">
+                {{ (type == 'person') ? fields.person.label : fields.organization.label }}
+            </div>
+        </div>
+    {% endif %}
+    {{ component('components:form.footer') }}   
+</form>

@@ -1,0 +1,13 @@
+{
+    "add": "Currency was added successfully.",
+    "update": "Currency was saved successfully.",
+    "delete": "Currency was deleted successfully.",   
+    "default": "Currency was set as default successfully.",   
+    "errors": {
+        "add": "Can't create currency.",
+        "update": "Can't update currency.",
+        "default": "Can't set default currency.",
+        "delete": "Can't delete currency",
+        "exist": "Currency with this code exist."       
+    }
+}

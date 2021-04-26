@@ -1,0 +1,29 @@
+{% set entity = createModel('Entity','entity') %}
+{% if role == 'customer' %}    
+    {% set entity = entity.has('customer') %}  
+{% endif %}
+
+{% set entity = entity.orderBy('name') %}
+{% set items = paginate(entity,'entity') %}
+{% set items = items.getItems() %}
+
+{% for item in items %}
+    <tr id="{{ item.uuid }}">        
+        <td>            
+            <button class="ui icon mini basic button edit-entity" uuid="{{ item.uuid }}">
+                <i class="icon edit"></i>
+            </button>
+            <button class="ui icon basic mini button delete-entity" uuid="{{ item.uuid }}" data-title="{{ item.title }}">
+                <i class="icon trash orange"></i>
+            </button>                        
+        </td>
+        <td>
+            {{ component('components:status.dropdown',{ status: item.status, uuid: item.uuid, skip: [2,3,4,5] }) }} 
+        </td>
+        <td>{{ item.date_created|dateFormat }}</td>
+        <td>{{ item.name }}</td>
+        <td>
+            {{ item.type }}
+        </td>               
+    </tr>
+{% endfor %}

@@ -1,0 +1,10 @@
+{% component 'components:tabs.vertical.content' %}
+    <div class="ui segment mt-4">
+       
+    </div>
+    <div class="mt-1" id="edit_entity_content">
+        {% if uuid is not empty %}
+            {{ component('entity::admin.entity.edit.tabs',{ uuid: uuid }) }}            
+        {% endif %}
+    </div>   
+{% endcomponent %}

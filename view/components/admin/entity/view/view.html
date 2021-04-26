@@ -1,0 +1,26 @@
+<div class="ui segment">
+    <div class="ui stackable grid">
+        <div class='fifteen wide column'>
+        </div>
+        <div class="one wide column right floated">       
+            {{ component('components:paginator.dropdown',{ namespace: 'entity' }) }}
+        </div>
+    </div>
+</div>
+<table class="ui compact stackable borderless basic table mt-2">
+    <thead>
+        <tr class="table-head">                          
+            <th class="one wide">{{ columns.action }}</th>
+            <th class="one wide">{{ columns.status }}</th>
+            <th class="collapsing two wide">{{ columns.date }}</th>
+            <th>{{ columns.name }}</th>                     
+            <th class="collapsing one wide">{{ columns.type }}</th>
+        </tr>
+    </thead>
+    <tbody id="items_list" component="entity::admin.entity.view.rows" namespace="entity" role="{{ role }}">
+        {{ component('entity::admin.entity.view.rows',{ role: role }) }}   
+    </tbody>  
+</table>
+<div class="mt-2" id="paginator">
+    {{ component('components:paginator',{ namespace: 'entity' }) }}
+</div>

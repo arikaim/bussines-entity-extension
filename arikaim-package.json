@@ -1,0 +1,26 @@
+{
+    "title": "Bussines enitites",
+    "name": "entity",
+    "package-type": "extension",
+    "type": "user",
+    "description": "Add, edit, import business entities.",
+    "short-description": "Add, edit, import business entities.",
+    "private-repository": true,
+    "repository": "https://github.com/arikaim-repository/bussines-entity-extension.git",
+    "version": "1.0.0",
+    "position": "2",
+    "require": {
+        "extensions": [
+            "users"
+        ],
+        "modules": [
+        ]
+    },
+    "admin-menu": {        
+        "title": "Entity",
+        "icon": "project diagram",
+        "page-title": "Bussines enitites",
+        "page-icon": "project diagram",
+        "component": "entity::admin"
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "fields": {
+        "name": {
+            "label": "Name",
+            "placeholder": "Enter name"
+        },
+        "person": {
+            "label": "Person"
+        },
+        "organization": {
+            "label": "Organization"
+        },
+        "sign": {
+            "label": "Sign",
+            "placeholder": "Enter Sign"
+        },
+        "crypto": {
+            "label": "Crypto Currency",
+            "placeholder": ""
+        }
+    }
+}

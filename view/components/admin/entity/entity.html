@@ -1,0 +1,14 @@
+{% set items = [ 
+    { title: labels.view, component: 'entity::admin.entity.view', icon: 'list', active: true }    
+] %}
+
+{{  component('components:tabs.vertical',{ 
+        items: items, 
+        menu: { id: 'entity_menu' }, 
+        item_class: 'entity-tab-item',
+        content: { 
+            component: 'entity::admin.entity.view',            
+            id: "entity_content" 
+        } 
+    })
+}}

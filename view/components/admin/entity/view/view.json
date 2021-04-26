@@ -1,0 +1,13 @@
+{
+    "title": {
+        "content": "View",
+        "icon": "list"              
+    },
+    "columns": {
+        "action": "Action",
+        "status": "Status",
+        "type": "Type",
+        "name": "Name",
+        "date": "Date Created"       
+    }
+}

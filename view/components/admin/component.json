@@ -1,0 +1,13 @@
+{
+    "include": {
+        "js": [
+            "components:search",
+            "entity::admin.entity"
+        ]
+    },
+    "access": {
+        "auth": "session",
+        "redirect": "/admin",
+        "permission": "ControlPanel:full"           
+    }
+}

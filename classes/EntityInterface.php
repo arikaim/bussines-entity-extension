@@ -19,4 +19,18 @@ interface EntityInterface
 
     const ROLE_CUSTOMER = 'customer';
     const ROLE_VENDOR   = 'vendor';
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName(): string;
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType(): string;
 }

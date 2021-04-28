@@ -45,8 +45,8 @@ class Entity extends Model
      */
     protected $fillable = [
         'name',
-        'type',
-        'type_id',
+        'relation_type',
+        'relation_id',
         'status',
         'user_id',
         'date_created',
@@ -59,6 +59,16 @@ class Entity extends Model
      * @var boolean
      */
     public $timestamps = false;
+
+    /**
+     * Get type relation
+     *
+     * @return Relation
+     */
+    public function enityType()
+    {
+        return $this->morphTo('relation');      
+    }
 
     /**
      * Get customer relation
@@ -86,10 +96,10 @@ class Entity extends Model
         }
 
         return $this->create([
-            'name'    => $name,
-            'type'    => $type,
-            'type_id' => $entityType->id,
-            'user_id' => $userId
+            'name'          => $name,
+            'relation_type' => $type,
+            'relation_id'   => $entityType->id,
+            'user_id'       => $userId
         ]);
     }
 

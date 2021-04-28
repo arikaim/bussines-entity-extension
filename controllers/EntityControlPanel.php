@@ -54,7 +54,7 @@ class EntityControlPanel extends ControlPanelApiController
     public function addController($request, $response, $data) 
     {        
         $this->onDataValid(function($data) {
-            $type = $data->get('type','person');
+            $type = $data->get('relation_type','person');
             $name = $data->get('name',null);
             $role = $data->get('role',null);
             $userId = $this->getUserId();

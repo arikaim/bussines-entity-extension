@@ -13,13 +13,20 @@ use Illuminate\Database\Eloquent\Model;
 
 use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Find;
+use Arikaim\Core\Db\Traits\DateCreated;
+use Arikaim\Core\Db\Traits\UserRelation;
+use Arikaim\Extensions\Address\Models\Traits\AddressRelation;
 
 /**
  * Person model class
  */
 class Person extends Model  
 {
-    use Uuid,           
+    use 
+        Uuid,   
+        UserRelation,   
+        AddressRelation,
+        DateCreated,     
         Find;
     
     /**

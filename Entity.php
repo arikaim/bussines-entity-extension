@@ -37,9 +37,11 @@ class Entity extends Extension
         $this->createDbTable('OrganizationSchema');     
         $this->createDbTable('CustomersSchema');  
         
-        // Relation map 
-        $this->addRelationMap('person','Person');
-        $this->addRelationMap('organization','Organization');
+        // Relations map 
+        $this->addRelationsMap([
+            'person'       => 'Person',
+            'organization' => 'Organization'
+        ]);
     } 
     
     /**

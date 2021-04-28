@@ -13,13 +13,18 @@ use Illuminate\Database\Eloquent\Model;
 
 use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Find;
+use Arikaim\Core\Db\Traits\DateCreated;
+use Arikaim\Extensions\Address\Models\Traits\AddressRelation;
 
 /**
  * Organization model class
  */
 class Organization extends Model  
 {
-    use Uuid,           
+    use 
+        Uuid,
+        DateCreated,     
+        AddressRelation,      
         Find;
     
     /**

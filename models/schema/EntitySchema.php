@@ -36,14 +36,14 @@ class EntitySchema extends Schema
         $table->status();
         $table->userId();
         $table->string('name')->nullable(false);
-        $table->string('type')->nullable(false);
-        $table->integer('type_id')->nullable(false);         
+        $table->string('relation_type')->nullable(false);
+        $table->integer('relation_id')->nullable(false);         
         $table->dateCreated();
         $table->dateDeleted();
         // index     
-        $table->index(['type','type_id']);
+        $table->index(['relation_type','relation_id']);
         $table->unique(['name','user_id']);          
-        $table->unique(['type','type_id','user_id'],'un_rel_id_type_' . $table->getTable());   
+        $table->unique(['relation_type','relation_id','user_id'],'un_rel_id_type_' . $table->getTable());   
     }
 
     /**

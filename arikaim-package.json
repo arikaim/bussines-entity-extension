@@ -11,7 +11,8 @@
     "position": "2",
     "require": {
         "extensions": [
-            "users"
+            "users",
+            "address"
         ],
         "modules": [
         ]

@@ -35,8 +35,10 @@ class Entity extends Extension
         $this->createDbTable('EntitySchema');     
         $this->createDbTable('PersonSchema');   
         $this->createDbTable('OrganizationSchema');     
-        $this->createDbTable('CustomersSchema');  
         
+        // Content Types
+        $this->registerContentType('Classes\\EntityContentType');
+
         // Relations map 
         $this->addRelationsMap([
             'person'       => 'Person',

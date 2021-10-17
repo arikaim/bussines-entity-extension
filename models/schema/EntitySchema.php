@@ -37,8 +37,14 @@ class EntitySchema extends Schema
         $table->userId();
         $table->string('name')->nullable(false);
         $table->string('relation_type')->nullable(false);
-        $table->integer('relation_id')->nullable(false);         
+        $table->integer('relation_id')->nullable(false);    
+        $table->boolean('customer')->nullable(true);    
+        $table->boolean('supplier')->nullable(true);       
+        $table->boolean('vendor')->nullable(true);         
+        $table->integer('owned_by_user')->nullable(true);    
+
         $table->dateCreated();
+        $table->dateUpdated();
         $table->dateDeleted();
         // index     
         $table->index(['relation_type','relation_id']);

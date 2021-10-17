@@ -1,0 +1,14 @@
+{
+    "labels": {
+        "view": "View",
+        "add": "Add",
+        "edit": "Edit",
+        "type": "Type"                   
+    },
+    "messages": {
+        "remove": {
+            "title": "Confirm Remove",
+            "content": "Confirm remove customer '<b><% title %></b>'"
+        }
+    }
+}

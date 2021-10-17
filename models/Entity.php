@@ -11,14 +11,14 @@ namespace Arikaim\Extensions\Entity\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Arikaim\Core\Db\Model as DbModel;
-use Arikaim\Extensions\Entity\Classes\EntityInterface;
-use Arikaim\Extensions\Entity\Models\Customers;
 use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Find;
 use Arikaim\Core\Db\Traits\Status;
 use Arikaim\Core\Db\Traits\DateCreated;
+use Arikaim\Core\Db\Traits\DateUpdated;
 use Arikaim\Core\Db\Traits\SoftDelete;
+//use Arikaim\Extensions\Entity\Models\Traits\EntityTrait;
+use Arikaim\Extensions\Entity\Classes\EntityInterface;
 
 /**
  * Entity model class
@@ -28,6 +28,7 @@ class Entity extends Model
     use Uuid,    
         Status,   
         DateCreated,
+        DateUpdated,
         SoftDelete,
         Find;
     
@@ -49,7 +50,12 @@ class Entity extends Model
         'relation_id',
         'status',
         'user_id',
+        'customer',
+        'supplier',
+        'vendor',
+        'owned_by_user',
         'date_created',
+        'date_updated',
         'date_deleted'       
     ];
     
@@ -61,23 +67,33 @@ class Entity extends Model
     public $timestamps = false;
 
     /**
-     * Get type relation
+     * Return true if entity exist
      *
-     * @return Relation
+     * @param string $name
+     * @return boolean
      */
-    public function enityType()
+    public function hasEntity(string $name): bool
     {
-        return $this->morphTo('relation');      
+        $model = $this->where('name','=',$name)->first();
+
+        return \is_object($model);
     }
 
     /**
-     * Get customer relation
+     * Scope query by role
      *
-     * @return Relation|null
+     * @param Builder $query
+     * @param string|null $role
+     * @param integer|null $userId
+     * @return Builder
      */
-    public function customer()
+    public function scopeQueryByRole($query, ?string $role, ?int $userId = null)
     {
-        return $this->hasOne(Customers::class,'entity_id');
+        if ($role == EntityInterface::ROLE_OWNER) {
+            return $query->where('owned_by_user','=',$userId);
+        } 
+
+        return $query->where($role,'=',1);
     }
 
     /**
@@ -86,43 +102,85 @@ class Entity extends Model
      * @param string $name
      * @param string $type
      * @param integer|null $userId
+     * @param string|null $role
      * @return Model|false
      */
-    public function createEntity(string $name, string $type, ?int $userId)
+    public function createEntity(string $name, string $type, ?int $userId, ?string $role)
     {
+        if ($this->hasEntity($name) == true) {
+            return false;
+        }
+
         $entityType = $this->crateEntityTypeModel($type);
         if (\is_object($entityType) == false) {
             return false;
         }
 
-        return $this->create([
+        $data = [
             'name'          => $name,
             'relation_type' => $type,
             'relation_id'   => $entityType->id,
             'user_id'       => $userId
-        ]);
+        ];
+        $roleData = $this->resolveRole($role,$userId);
+        $data = \array_merge($data,$roleData);
+       
+        $model = $this->create($data);
+        
+        return $model;       
     }
 
     /**
-     * Add role relation
+     * Resolve role
      *
-     * @param integer $entityId
-     * @param string $role
-     * @return void
+     * @param string|null $role
+     * @param integer|null $userId
+     * @return array
      */
-    public function addRoleRelation(int $entityId, string $role)
+    public function resolveRole(?string $role, ?int $userId = null): array
     {
-        switch ($role) {
-            case EntityInterface::ROLE_CUSTOMER:
-                $model = DbModel::Customers('entity');
+        $result = [];
+        switch($role) {
+            case EntityInterface::ROLE_CUSTOMER: {
+               $result['customer'] = 1; 
+               break;
+            }
+            case EntityInterface::ROLE_VENDOR: {
+                $result['vendor'] = 1; 
                 break;
-            default:
-                return false;
+            }
+            case EntityInterface::ROLE_SUPPLIER: {
+                $result['supplier'] = 1; 
+                break;
+            }
+            case EntityInterface::ROLE_OWNER: {
+                $result['owned_by_user'] = $userId; 
+                break;
+            }
         }
 
-        $created = $model->create(['entity_id' => $entityId]);
+        return $result;
+    }
 
-        return (\is_object($created) == true) ? $created : false;
+    /**
+     * Update entity
+     *
+     * @param string $key
+     * @param array $data
+     * @return boolean
+     */
+    public function updatEntity(string $key, array $data): bool
+    {
+        $model = $this->findByColumn($key,'name'); 
+        $model = \is_object($model) ? $model : $this->findById($key);
+        if (\is_object($model) == false) {
+            return false;
+        }
+
+        $model->update($data);
+        $result = $model->entityTyep()->update($data);
+
+        return ($result !== false);
     }
 
     /**
@@ -135,10 +193,10 @@ class Entity extends Model
     {
         switch ($type) {
             case EntityInterface::TYPE_PERSON:
-                $model = DbModel::Person('entity');
+                $model = new Person();
                 break;
             case EntityInterface::TYPE_ORGANIZATION:
-                $model = DbModel::Organization('entity');
+                $model = new Organization();
                 break;
             default:
                 return false;
@@ -147,5 +205,15 @@ class Entity extends Model
         $created = $model->create([]);
 
         return (\is_object($created) == true) ? $created : false;
+    }
+
+    /**
+     * Get type relation
+     *
+     * @return Relation
+     */
+    public function entityType()
+    {
+        return $this->morphTo('relation');      
     }
 }

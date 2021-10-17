@@ -1,0 +1,17 @@
+{% set items = [ 
+    { title: labels.view, component: 'entity::admin.entity.view', icon: 'list', active: true, params: { role: 'owner' } },
+    { title: labels.add, component: 'entity::admin.my.add', icon: 'plus' },
+    { title: labels.edit, component: 'entity::admin.my.edit', icon: 'edit' }
+] %}
+
+{{  component('components:tabs.vertical',{ 
+        items: items, 
+        menu: { id: 'customers_menu' }, 
+        item_class: 'customers-tab-item',
+        content: { 
+            component: 'entity::admin.entity.view', 
+            params: { role: 'owner' },
+            id: "entity_content" 
+        } 
+    })
+}}

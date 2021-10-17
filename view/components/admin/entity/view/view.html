@@ -1,9 +1,12 @@
 <div class="ui segment">
     <div class="ui stackable grid">
-        <div class='fifteen wide column'>
+        <div class='four wide column'>
+            {{ component('components:search.form',{ namespace: 'entity.' ~ role }) }}
+        </div>
+        <div class="ten wide column">          
         </div>
         <div class="one wide column right floated">       
-            {{ component('components:paginator.dropdown',{ namespace: 'entity' }) }}
+            {{ component('components:paginator.dropdown',{ namespace: 'entity.' ~ role }) }}
         </div>
     </div>
 </div>
@@ -22,5 +25,5 @@
     </tbody>  
 </table>
 <div class="mt-2" id="paginator">
-    {{ component('components:paginator',{ namespace: 'entity' }) }}
+    {{ component('components:paginator',{ namespace: 'entity.' ~ role }) }}
 </div>

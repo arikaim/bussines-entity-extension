@@ -28,7 +28,7 @@ class EntityApi extends ApiController
     }
 
     /**
-     * Get currency list (for currency dropdown)
+     * Get Entity list (for Entity dropdown)
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response

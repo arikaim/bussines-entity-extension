@@ -1,21 +1,28 @@
-{% set id = id|default('currency_dropdown') %}
-{% set name = name|default('currency') %}
-{% set class = class|default('selection') %}
-{% set data_field = data_field|default('uuid') %}
-{% set model = createModel('Currency','currency') %}
-{% set items = model.orderBy('code').get() %}
+{% set size = size|default(15) %}
+{% set entity = createModel('Entity','entity') %}
 {% if selected is not empty %}
-    {% set selected = model.findById(selected) %}
+    {% set item_selected = entity.findById(selected) %}
 {% endif %}
-{% set selectet_text = (selected is empty) ? labels.select : selected.title %}
-<div class="ui search dropdown currency-dropdown {{ class }}" id="{{ id }}">
-    <input name="{{ name }}" type="hidden">
-    <i class="money bill alternate outline icon {{ icon }}"></i>
-    <div class="text">{{ selectet_text }}</div>
-    <i class="dropdown icon"></i>
-    <div class="menu">
+{% if role == 'customer' %}    
+    {% set entity = entity.has('customer') %}  
+{% endif %}
+{% set items = entity.take(size).get() %}
+{% set data_field = data_field|default('uuid') %}
+
+<div class="ui search selection dropdown entity-dropdown {{ class }}" 
+    {{ title|attr('title') }} 
+    data-field="{{ data_field }}"
+    id="{{ id|default('entity_dropdown') }}">    
+    <input {{ rule|attr('rule') }} name="{{ name }}" type="hidden" value="{{ item_selected[data_field] }}">  
+    <div class="text">
+        {{ item_selected.name|default(labels.choose) }}
+    </div>  
+    <i class="icon dropdown"></i>
+    <div class="menu">        
         {% for item in items %}
-            <div class="item" data-value="{{ item[data_field] }} ">{{ item.title }}</div>
-        {% endfor %}
+        <div class="item" data-value="{{ item[data_field] }}">  
+            {{ item.name }}
+        </div>   
+        {% endfor %}          
     </div>
 </div>

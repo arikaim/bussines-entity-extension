@@ -1,7 +1,8 @@
 {
     "include": {
         "js": [
-            "components:search"
+            "components:search",
+            "entity::admin.entity"
         ]
     },
     "access": {

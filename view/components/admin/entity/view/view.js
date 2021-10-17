@@ -45,13 +45,27 @@ function EntityView() {
 
     this.init = function() {
         this.loadMessages('entity::admin.customers');
+        
+        var role = $('#items_list').attr('role').trim();
+        var namespace = 'entity.' + role;
 
         paginator.init('items_list',{
             name: 'entity::admin.entity.view.rows',
             params: {
-                namespace: 'entity'
+                namespace: namespace
             }
         }); 
+
+        search.init({
+            id: 'items_list',
+            component: 'entity::admin.entity.view.rows',
+            event: 'entity.search.load'
+        },namespace);
+        
+        arikaim.events.on('entity.search.load',function(result) {      
+            paginator.reload();
+            self.initRows();    
+        },'entitySearch');   
     };
 }
 

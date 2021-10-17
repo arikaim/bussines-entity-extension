@@ -1,0 +1,9 @@
+<div class="ui action input {{ class }}">
+    {{ component('entity::admin.entity.dropdown',{ role: role, class: 'fluid' }) }}
+    <button 
+        {{ button.id|attr('id') }} 
+        class="ui icon button new-entity-button {{ button.class|default('green') }}" 
+        title="{{ button.hint|default(labels.hint) }}">
+        <i class="icon plus {{ button.icon }}"></i>
+    </button>
+</div>

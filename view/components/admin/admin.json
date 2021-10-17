@@ -1,6 +1,7 @@
 {
     "labels": {       
         "customers": "Customers",
-        "entity": "Enitites"    
+        "entity": "Enitites",
+        "my": "My Own"    
     }
 }

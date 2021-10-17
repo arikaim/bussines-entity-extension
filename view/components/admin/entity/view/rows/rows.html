@@ -1,6 +1,6 @@
 {% set entity = createModel('Entity','entity') %}
-{% if role == 'customer' %}    
-    {% set entity = entity.has('customer') %}  
+{% if role is not empty %}    
+    {% set entity = entity.queryByRole(role,service('access').getId()) %}  
 {% endif %}
 
 {% set entity = entity.orderBy('name') %}
@@ -23,7 +23,9 @@
         <td>{{ item.date_created|dateFormat }}</td>
         <td>{{ item.name }}</td>
         <td>
-            {{ item.type }}
+            <div class="ui basic label">
+                {{ item.relation_type }}
+            </div>           
         </td>               
     </tr>
 {% endfor %}

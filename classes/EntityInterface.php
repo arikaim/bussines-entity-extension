@@ -19,7 +19,9 @@ interface EntityInterface
 
     const ROLE_CUSTOMER = 'customer';
     const ROLE_VENDOR   = 'vendor';
-
+    const ROLE_SUPPLIER = 'supplier';
+    const ROLE_OWNER    = 'owner';
+    
     /**
      * Get name
      *

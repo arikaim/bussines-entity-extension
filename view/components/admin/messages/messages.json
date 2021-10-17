@@ -1,13 +1,11 @@
 {
-    "add": "Currency was added successfully.",
-    "update": "Currency was saved successfully.",
-    "delete": "Currency was deleted successfully.",   
-    "default": "Currency was set as default successfully.",   
+    "add": "Added successfully.",
+    "update": "Saved successfully.",
+    "delete": "Deleted successfully.",    
     "errors": {
-        "add": "Can't create currency.",
-        "update": "Can't update currency.",
-        "default": "Can't set default currency.",
-        "delete": "Can't delete currency",
-        "exist": "Currency with this code exist."       
+        "add": "Can't create entity.",
+        "update": "Can't update entity.",      
+        "delete": "Can't delete entity",
+        "id": "Not valid entity Id."       
     }
 }

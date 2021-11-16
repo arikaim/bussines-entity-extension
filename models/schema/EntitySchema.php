@@ -40,7 +40,8 @@ class EntitySchema extends Schema
         $table->integer('relation_id')->nullable(false);    
         $table->boolean('customer')->nullable(true);    
         $table->boolean('supplier')->nullable(true);       
-        $table->boolean('vendor')->nullable(true);         
+        $table->boolean('vendor')->nullable(true);    
+        $table->boolean('employee')->nullable(true);         
         $table->integer('owned_by_user')->nullable(true);    
 
         $table->dateCreated();

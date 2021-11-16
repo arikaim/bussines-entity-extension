@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
 use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Find;
 use Arikaim\Core\Db\Traits\DateCreated;
-use Arikaim\Extensions\Address\Models\Traits\AddressRelation;
 
 /**
  * Organization model class
@@ -23,8 +22,7 @@ class Organization extends Model
 {
     use 
         Uuid,
-        DateCreated,     
-        AddressRelation,      
+        DateCreated,         
         Find;
     
     /**
@@ -41,7 +39,6 @@ class Organization extends Model
      */
     protected $fillable = [
         'note',     
-        'address_id',
         'user_id',
         'date_created'          
     ];

@@ -12,7 +12,6 @@ namespace Arikaim\Extensions\Entity\Models\Traits;
 use Arikaim\Extensions\Entity\Classes\EntityInterface;
 use Arikaim\Extensions\Entity\Models\Organization;
 use Arikaim\Extensions\Entity\Models\Person;
-use Arikaim\Core\Db\Model as DbModel;
 
 /**
  * Entity trait
@@ -68,27 +67,6 @@ trait EntityTrait
         }
 
         return $model;
-    }
-
-    /**
-     * Create role relation
-     *
-     * @param integer $entityId
-     * @param string|null $role
-     * @return Model|null
-     */
-    public function addRoleRelation(int $entityId, ?string $role)
-    {
-        switch ($role) {
-            case EntityInterface::ROLE_CUSTOMER: {
-                $customer = DbModel::create('Customers','entity');
-                return $customer->create([
-                    'entity_id' => $entityId
-                ]);
-            }
-        }
-
-        return null;
     }
 
     /**

@@ -11,13 +11,13 @@ namespace Arikaim\Extensions\Entity\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Arikaim\Extensions\Entity\Models\EntityAddress;
 use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Find;
 use Arikaim\Core\Db\Traits\Status;
 use Arikaim\Core\Db\Traits\DateCreated;
 use Arikaim\Core\Db\Traits\DateUpdated;
 use Arikaim\Core\Db\Traits\SoftDelete;
-//use Arikaim\Extensions\Entity\Models\Traits\EntityTrait;
 use Arikaim\Extensions\Entity\Classes\EntityInterface;
 
 /**
@@ -53,6 +53,7 @@ class Entity extends Model
         'customer',
         'supplier',
         'vendor',
+        'employee',
         'owned_by_user',
         'date_created',
         'date_updated',
@@ -65,6 +66,29 @@ class Entity extends Model
      * @var boolean
      */
     public $timestamps = false;
+
+    /**
+     * is_person attribute
+     *
+     * @return boolean
+     */
+    public function getIsPersonAttribute()
+    {
+        return ($this->relation_type == 'person');
+    } 
+
+    /**
+     * Entity address
+     *
+     * @return void
+     */
+    public function address()
+    {
+        $addresses = new EntityAddress();
+        $addresses->entity_id = $this->id;
+
+        return $addresses;
+    }
 
     /**
      * Return true if entity exist
@@ -153,10 +177,14 @@ class Entity extends Model
                 $result['supplier'] = 1; 
                 break;
             }
+            case EntityInterface::ROLE_EMPLOYEE: {
+                $result['employee'] = 1; 
+                break;
+            }
             case EntityInterface::ROLE_OWNER: {
                 $result['owned_by_user'] = $userId; 
                 break;
-            }
+            }           
         }
 
         return $result;

@@ -1,6 +1,10 @@
 {
     "labels": {
         "details": "Details",
-        "address": "Address"        
+        "address": {
+            "home": "Home Address",
+            "business": "Business Address"     
+        }
+             
     }
 }

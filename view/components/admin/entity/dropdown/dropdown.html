@@ -1,21 +1,19 @@
-{% set size = size|default(15) %}
-{% set entity = createModel('Entity','entity') %}
+{% set size = size|default(25) %}
+{% set model = createModel('Entity','entity') %}
+{% set entity = (role is not empty) ? model.queryByRole(role) : model %}    
 {% if selected is not empty %}
-    {% set item_selected = entity.findById(selected) %}
-{% endif %}
-{% if role == 'customer' %}    
-    {% set entity = entity.has('customer') %}  
+    {% set selected = model.findById(selected) %}
 {% endif %}
 {% set items = entity.take(size).get() %}
 {% set data_field = data_field|default('uuid') %}
-
+{% set selected_text = (selected is empty) ? labels.select : selected.name %}
 <div class="ui search selection dropdown entity-dropdown {{ class }}" 
     {{ title|attr('title') }} 
     data-field="{{ data_field }}"
     id="{{ id|default('entity_dropdown') }}">    
-    <input {{ rule|attr('rule') }} name="{{ name }}" type="hidden" value="{{ item_selected[data_field] }}">  
+    <input {{ rule|attr('rule') }} name="{{ name }}" type="hidden" value="{{ selected[data_field] }}">  
     <div class="text">
-        {{ item_selected.name|default(labels.choose) }}
+        {{ selected_text }}
     </div>  
     <i class="icon dropdown"></i>
     <div class="menu">        

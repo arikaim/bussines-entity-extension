@@ -20,7 +20,7 @@
     "admin-menu": {        
         "title": "Entity",
         "icon": "project diagram",
-        "page-title": "Bussines enitites",
+        "page-title": "Bussines Enitites",
         "page-icon": "project diagram",
         "component": "entity::admin"
     }

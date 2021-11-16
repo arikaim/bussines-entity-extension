@@ -15,7 +15,6 @@ use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Find;
 use Arikaim\Core\Db\Traits\DateCreated;
 use Arikaim\Core\Db\Traits\UserRelation;
-use Arikaim\Extensions\Address\Models\Traits\AddressRelation;
 
 /**
  * Person model class
@@ -24,8 +23,7 @@ class Person extends Model
 {
     use 
         Uuid,   
-        UserRelation,   
-        AddressRelation,
+        UserRelation,         
         DateCreated,     
         Find;
     
@@ -43,8 +41,7 @@ class Person extends Model
      */
     protected $fillable = [
         'note',
-        'age',
-        'address_id',
+        'age',       
         'user_id',
         'date_created'          
     ];

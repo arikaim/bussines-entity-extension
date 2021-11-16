@@ -1,4 +1,6 @@
 {% set entity = createModel('Entity','entity').findById(uuid) %}
-<div>    
-    {{ component('address::address.form',{ uuid: entity.enityType.address.id }) }}     
+{% set address = entity.address().findOrCreate(type) %}    
+<div>
+     
+    {{ component('address::address.form',{ uuid: address.uuid }) }}     
 </div>

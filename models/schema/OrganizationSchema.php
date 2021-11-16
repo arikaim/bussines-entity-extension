@@ -33,8 +33,7 @@ class OrganizationSchema extends Schema
     {            
         $table->id();
         $table->prototype('uuid');   
-        $table->userId();  
-        $table->relation('address_id','address',true);           
+        $table->userId();           
         $table->text('note')->nullable(true);         
         $table->dateCreated();
     }

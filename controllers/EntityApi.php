@@ -39,16 +39,20 @@ class EntityApi extends ApiController
     {       
         $this->onDataValid(function($data) {   
             $search = $data->get('query','');
+            $role = $data->get('role','all');            
             $size = $data->get('size',5);
 
-            $model = Model::Currency('currency');
-            $model = $model->getActive()->where('title','like',"%$search%")->take($size)->get();
+            $model = Model::Entity('entity')->getActive();
+            if ($role != 'all' && empty($role) == false) {
+                $model = $model->queryByRole($role);
+            }
+            $model = $model->where('name','like',"%$search%")->take($size)->get();
 
             $this->setResponse(\is_object($model),function() use($model) {     
                 $items = [];
                 foreach ($model as $item) {
                     $items[] = [
-                        'name' => $item['code'],
+                        'name' => $item['name'],
                         'value' => $item['uuid']
                     ];
                 }

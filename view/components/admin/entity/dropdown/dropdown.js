@@ -2,14 +2,16 @@
 
 arikaim.component.onLoaded(function() {
     var dataField = $('.entity-dropdown').attr('data-field');
+    var role = $('.entity-dropdown').attr('role');
+   
+    console.log(role);
     
-    var v = {
+    $('.entity-dropdown').dropdown({
         apiSettings: {     
             on: 'now',      
-            url: arikaim.getBaseUrl() + '/api/address/city/list/' + dataField + '/{query}',   
+            url: arikaim.getBaseUrl() + '/api/entity/list/' + dataField + '/' + role + '/{query}',   
             cache: false        
         },       
-        filterRemoteData: false         
-    };
-    $('.entity-dropdown').dropdown({});
+        filterRemoteData: false                
+    });
 });

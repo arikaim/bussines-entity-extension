@@ -29,7 +29,7 @@ class Entity extends Extension
         $this->addApiRoute('DELETE','/api/admin/entity/delete/{uuid}','EntityControlPanel','delete','session');     
         $this->addApiRoute('PUT','/api/admin/entity/status','EntityControlPanel','setStatus','session');        
         // Api Routes
-        $this->addApiRoute('GET','/api/entity/list/{language}','EntityApi','getList');     
+        $this->addApiRoute('GET','/api/entity/list/{data_field}/{role}/[{query}]','EntityApi','getList','session');     
         
         // Create db tables
         $this->createDbTable('EntitySchema');     

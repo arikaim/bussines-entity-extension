@@ -1,11 +1,9 @@
 'use strict';
 
 arikaim.component.onLoaded(function() {
-    var dataField = $('.entity-dropdown').attr('data-field');
-    var role = $('.entity-dropdown').attr('role');
-   
-    console.log(role);
-    
+    var dataField = $('.entity-dropdown').attr('data-field').trim();
+    var role = $('.entity-dropdown').attr('role').trim();
+     
     $('.entity-dropdown').dropdown({
         apiSettings: {     
             on: 'now',      
@@ -13,5 +11,5 @@ arikaim.component.onLoaded(function() {
             cache: false        
         },       
         filterRemoteData: false                
-    });
+    });    
 });

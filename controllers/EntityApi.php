@@ -41,6 +41,7 @@ class EntityApi extends ApiController
             $search = $data->get('query','');
             $role = $data->get('role','all');            
             $size = $data->get('size',5);
+            $dataField = $data->get('data_field','uuid');     
 
             $model = Model::Entity('entity')->getActive();
             if ($role != 'all' && empty($role) == false) {
@@ -48,12 +49,12 @@ class EntityApi extends ApiController
             }
             $model = $model->where('name','like',"%$search%")->take($size)->get();
 
-            $this->setResponse(\is_object($model),function() use($model) {     
+            $this->setResponse(\is_object($model),function() use($model,$dataField) {     
                 $items = [];
                 foreach ($model as $item) {
                     $items[] = [
                         'name' => $item['name'],
-                        'value' => $item['uuid']
+                        'value' => $item[$dataField]
                     ];
                 }
                 $this                    

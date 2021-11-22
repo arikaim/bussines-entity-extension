@@ -7,18 +7,19 @@
 {% set items = entity.take(size).get() %}
 {% set data_field = data_field|default('uuid') %}
 {% set selected_text = (selected is empty) ? labels.select : selected.name %}
+
 <div class="ui search selection dropdown entity-dropdown {{ class }}" 
     {{ title|attr('title') }} 
     data-field="{{ data_field }}"
     role="{{ role|default('all') }}"
     id="{{ id|default('entity_dropdown') }}">    
-    <input {{ rule|attr('rule') }} name="{{ name }}" type="hidden" value="{{ selected[data_field] }}">  
+    <input {{ rule|attr('rule') }} name="{{ name|default('entity_id') }}" type="hidden" value="{{ selected[data_field] }}">  
     <div class="text">
         {{ selected_text }}
     </div>  
     <i class="icon dropdown"></i>
     <div class="menu">        
-        {% for item in items %}
+        {% for item in items %}      
         <div class="item" data-value="{{ item[data_field] }}">  
             {{ item.name }}
         </div>   

@@ -42,6 +42,7 @@ class Entity extends Extension
 
         // Relations map 
         $this->addRelationsMap([
+            'entity'       => 'Entity',
             'person'       => 'Person',
             'organization' => 'Organization'
         ]);

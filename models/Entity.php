@@ -68,6 +68,26 @@ class Entity extends Model
     public $timestamps = false;
 
     /**
+     * Delete entity
+     *
+     * @param integer|null $id
+     * @return bool
+     */
+    public function deleteEntity(?int $id = null): bool
+    {       
+        $model = (empty($id) == false) ? $this->findById($id) : $this;
+        // delete address relations
+        $this->address($id)->findAddressQuery(null,$model->id)->delete();
+        // delete entity type model
+        $type = $this->getEntityTypeModel($model->relation_type,$model->relation_id);
+        if (\is_object($type) == true) {
+            $type->delete();
+        }
+        // delete entity
+        return ($model->delete() !== false);
+    }
+
+    /**
      * is_person attribute
      *
      * @return boolean
@@ -80,12 +100,13 @@ class Entity extends Model
     /**
      * Entity address
      *
-     * @return void
+     * @param int|null $entityId
+     * @return Model
      */
-    public function address()
+    public function address(?int $entityId = null)
     {
         $addresses = new EntityAddress();
-        $addresses->entity_id = $this->id;
+        $addresses->entity_id = $entityId ?? $this->id;
 
         return $addresses;
     }
@@ -191,33 +212,27 @@ class Entity extends Model
     }
 
     /**
-     * Update entity
-     *
-     * @param string $key
-     * @param array $data
-     * @return boolean
-     */
-    public function updatEntity(string $key, array $data): bool
-    {
-        $model = $this->findByColumn($key,'name'); 
-        $model = \is_object($model) ? $model : $this->findById($key);
-        if (\is_object($model) == false) {
-            return false;
-        }
-
-        $model->update($data);
-        $result = $model->entityTyep()->update($data);
-
-        return ($result !== false);
-    }
-
-    /**
      * Create entity model type
      *
      * @param string $type
      * @return object|false
      */
     public function crateEntityTypeModel(string $type)
+    {
+        $model = $this->getEntityTypeModel($type);
+        $created = $model->create([]);
+
+        return (\is_object($created) == true) ? $created : false;
+    }
+
+    /**
+     * Get entity type model
+     *
+     * @param string $type
+     * @param integer|null $id
+     * @return Model|null
+     */
+    public function getEntityTypeModel(string $type, ?int $id = null) 
     {
         switch ($type) {
             case EntityInterface::TYPE_PERSON:
@@ -229,10 +244,8 @@ class Entity extends Model
             default:
                 return false;
         }
-
-        $created = $model->create([]);
-
-        return (\is_object($created) == true) ? $created : false;
+        
+        return (empty($id) == false) ? $model->findById($id) : $model;
     }
 
     /**

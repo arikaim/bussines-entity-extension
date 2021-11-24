@@ -65,14 +65,20 @@ class EntityAddress extends Model
      *
      * @param Builder $query
      * @param integer|null $entityId
-     * @param string $type
+     * @param string|null $type
      * @return Builder
      */
-    public function scopeFindAddressQuery($query, string $type, ?int $entityId = null)
+    public function scopeFindAddressQuery($query, ?string $type, ?int $entityId = null)
     {
         $entityId = $entityId ?? $this->entity_id;
-
-        return $query->where('entity_id','=',$entityId)->where('address_type','=',$type);
+        if (empty($type) == false) {
+            $query->where('address_type','=',$type);
+        }
+        if (empty($entityId) == false) {
+            $query->where('entity_id','=',$entityId);
+        }
+        
+        return $query;
     }
 
     /**

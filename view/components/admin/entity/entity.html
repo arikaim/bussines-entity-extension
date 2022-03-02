@@ -1,9 +1,7 @@
-{% set items = [ 
-    { title: labels.view, component: 'entity::admin.entity.view', icon: 'list', active: true }    
-] %}
-
 {{  component('semantic~tabs.vertical',{ 
-        items: items, 
+        items: [ 
+            { title: labels.view, component: 'entity::admin.entity.view', icon: 'list', active: true }    
+        ], 
         menu: { id: 'entity_menu' }, 
         item_class: 'entity-tab-item',
         content: { 

@@ -1,10 +1,8 @@
-{% set items = [  
-    { id: 'customers_button', title: labels.customers, component: 'entity::admin.customers', icon: 'users', active: true },
-    { id: 'my_button', title: labels.my, component: 'entity::admin.my', icon: 'user outline' }
-] %}
-
 {{  component('semantic~tabs',{ 
-        items: items,
+        items: [  
+            { id: 'customers_button', title: labels.customers, component: 'entity::admin.customers', icon: 'users', active: true },
+            { id: 'my_button', title: labels.my, component: 'entity::admin.my', icon: 'user outline' }
+        ],
         menu: { extension: 'entity' },
         content: { component: 'entity::admin.customers' } 
     })

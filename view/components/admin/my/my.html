@@ -1,11 +1,9 @@
-{% set items = [ 
-    { title: labels.view, component: 'entity::admin.entity.view', icon: 'list', active: true, params: { role: 'owner' } },
-    { title: labels.add, component: 'entity::admin.my.add', icon: 'plus' },
-    { title: labels.edit, component: 'entity::admin.my.edit', icon: 'edit' }
-] %}
-
 {{  component('semantic~tabs.vertical',{ 
-        items: items, 
+        items:  [ 
+            { title: labels.view, component: 'entity::admin.entity.view', icon: 'list', active: true, params: { role: 'owner' } },
+            { title: labels.add, component: 'entity::admin.my.add', icon: 'plus' },
+            { title: labels.edit, component: 'entity::admin.my.edit', icon: 'edit' }
+        ], 
         menu: { id: 'customers_menu' }, 
         item_class: 'customers-tab-item',
         content: { 

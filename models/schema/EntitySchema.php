@@ -41,9 +41,9 @@ class EntitySchema extends Schema
         $table->boolean('customer')->nullable(true);    
         $table->boolean('supplier')->nullable(true);       
         $table->boolean('vendor')->nullable(true);    
-        $table->boolean('employee')->nullable(true);         
-        $table->integer('owned_by_user')->nullable(true);    
-
+        $table->boolean('employee')->nullable(true);       
+        $table->boolean('seller')->nullable(true);         
+       
         $table->dateCreated();
         $table->dateUpdated();
         $table->dateDeleted();

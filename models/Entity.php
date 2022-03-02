@@ -54,7 +54,7 @@ class Entity extends Model
         'supplier',
         'vendor',
         'employee',
-        'owned_by_user',
+        'seller',
         'date_created',
         'date_updated',
         'date_deleted'       
@@ -134,10 +134,6 @@ class Entity extends Model
      */
     public function scopeQueryByRole($query, ?string $role, ?int $userId = null)
     {
-        if ($role == EntityInterface::ROLE_OWNER) {
-            return $query->where('owned_by_user','=',$userId);
-        } 
-
         return $query->where($role,'=',1);
     }
 
@@ -202,8 +198,8 @@ class Entity extends Model
                 $result['employee'] = 1; 
                 break;
             }
-            case EntityInterface::ROLE_OWNER: {
-                $result['owned_by_user'] = $userId; 
+            case EntityInterface::ROLE_SELLER: {
+                $result['seller'] = 1; 
                 break;
             }           
         }

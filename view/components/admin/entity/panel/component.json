@@ -1,0 +1,13 @@
+{
+    "include": {
+        "js": [
+            "entity::admin.entity",
+            "address::admin"
+        ]
+    },
+    "access": {
+        "auth": "session",
+        "redirect": "/admin",
+        "permission": "ControlPanel:full"           
+    }
+}

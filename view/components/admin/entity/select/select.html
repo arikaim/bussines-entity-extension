@@ -1,9 +1,18 @@
-<div class="ui action input {{ class }}">
-    {{ component('entity::admin.entity.dropdown',{ role: role, class: 'fluid' }) }}
-    <button 
+<div class="ui action input {{ class }}">   
+    {{  component('entity::admin.entity.dropdown',{ 
+            role: role, 
+            component_id: dropdown_id,
+            data_field: data_field,
+            name: field_name,
+            class: 'fluid' 
+        }) 
+    }}
+    <a 
         {{ button.id|attr('id') }} 
+        role="{{ role|default('customer') }}"
+        content-id="{{ content_id|default('new_entity_content') }}"
         class="ui icon button new-entity-button {{ button.class|default('green') }}" 
         title="{{ button.hint|default(labels.hint) }}">
         <i class="icon plus {{ button.icon }}"></i>
-    </button>
+    </a>
 </div>

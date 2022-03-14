@@ -1,5 +1,5 @@
 {% component 'semantic~tabs.vertical.content' %}
-    <div class="mt-4">
+    <div class="mt-4 {{ class|default('w-full') }}">
         {{ component('entity::admin.entity.form',{ type_edit: true, role: role, title: title }) }}  
     </div>   
 {% endcomponent %}

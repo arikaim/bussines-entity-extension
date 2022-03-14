@@ -1,0 +1,6 @@
+{% if uuid is not empty %}
+    {% set entity = createModel('Entity','entity').findById(uuid) %}
+{% endif %}
+<div>
+    <h4>{{ entity.name }}</h4>
+</div>

@@ -1,0 +1,13 @@
+<div class="ui segment new-entity-panel {{ class }}" id="new_entity_panel">  
+    {% if hide_title != true %}
+        {{  component('semantic~segment-title',{ 
+                title: title|default(titles[role]) , 
+                icon: 'plus', 
+                close_button: true 
+            }) 
+        }}
+    {% endif %}
+    <div class="mt-4">
+        {{ component('entity::admin.entity.form',{ type_edit: true, role: role, title: title }) }}  
+    </div>   
+</div>  

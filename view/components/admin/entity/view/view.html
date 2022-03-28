@@ -5,7 +5,7 @@
         </div>
         <div class="ten wide column">          
         </div>
-        <div class="one wide column right floated">       
+        <div class="two wide column right aligned">       
             {{ component('semantic~paginator.dropdown',{ namespace: 'entity.' ~ role }) }}
         </div>
     </div>
@@ -15,7 +15,7 @@
         <thead>
             <tr class="table-head">                          
                 <th class="one wide">{{ columns.action }}</th>
-                <th class="one wide">{{ columns.status }}</th>
+                <th class="two wide">{{ columns.status }}</th>
                 <th class="collapsing two wide">{{ columns.date }}</th>
                 <th>{{ columns.name }}</th>                     
                 <th class="collapsing one wide">{{ columns.type }}</th>

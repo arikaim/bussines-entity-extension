@@ -12,7 +12,6 @@ namespace Arikaim\Extensions\Entity\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use Arikaim\Extensions\Address\Models\Address;
-use Arikaim\Core\Db\Model as DbModel;
 use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Find;
 

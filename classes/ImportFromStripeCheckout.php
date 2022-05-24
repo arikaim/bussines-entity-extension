@@ -25,9 +25,9 @@ class ImportFromStripeCheckout extends Action
      */
     public function init(): void
     {
-        $this->setName('address.import.stripe');
+        $this->setName('entity.import.stripe');
         $this->setType('import');
-        $this->setTitle('Import address from stripe transaction data.');
+        $this->setTitle('Import customer from stripe transaction data.');
     }
 
     /**

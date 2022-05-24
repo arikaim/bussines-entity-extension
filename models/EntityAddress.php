@@ -109,6 +109,32 @@ class EntityAddress extends Model
     } 
 
     /**
+     * Link existing address
+     *
+     * @param string       $type
+     * @param integer      $addressId
+     * @param integer|null $entityId
+     * @return boolean
+     */
+    public function linkAddress(string $type, int $addressId, ?int $entityId): bool
+    {
+        $entityId = $entityId ?? $this->entity_id;
+        $model = $this->findAddress($type,$entityId);
+        if (\is_object($model) == true) {
+            // address link exists
+            return false;
+        }
+
+        $relation = $this->create([
+            'entity_id'    => $entityId,
+            'address_type' => $type,
+            'address_id'   => $addressId
+        ]);
+
+        return \is_object($relation);
+    }
+
+    /**
      * Find or create new address model with relation to entity
      *
      * @param integer|null $entityId

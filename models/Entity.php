@@ -163,7 +163,7 @@ class Entity extends Model
             'relation_id'   => $entityType->id,
             'user_id'       => $userId
         ];
-        $roleData = $this->resolveRole($role,$userId);
+        $roleData = $this->resolveRole($role);
         $data = \array_merge($data,$roleData);
        
         $model = $this->create($data);
@@ -175,10 +175,9 @@ class Entity extends Model
      * Resolve role
      *
      * @param string|null $role
-     * @param integer|null $userId
      * @return array
      */
-    public function resolveRole(?string $role, ?int $userId = null): array
+    public function resolveRole(?string $role): array
     {
         $result = [];
         switch($role) {

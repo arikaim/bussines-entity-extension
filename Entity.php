@@ -30,16 +30,15 @@ class Entity extends Extension
         $this->addApiRoute('PUT','/api/admin/entity/status','EntityControlPanel','setStatus','session');        
         // Api Routes
         $this->addApiRoute('GET','/api/entity/list/{data_field}/{role}/[{query}]','EntityApi','getList','session');     
-        
         // Create db tables
         $this->createDbTable('EntitySchema');     
         $this->createDbTable('PersonSchema');   
         $this->createDbTable('OrganizationSchema');  
         $this->createDbTable('EntityAddressSchema');       
-        
         // Content Types
         $this->registerContentType('Classes\\EntityContentType');
-
+        // Content type actions
+        $this->registerContentTypeAction('entity','Classes\\ImportFromStripeCheckout');  
         // Relations map 
         $this->addRelationsMap([
             'entity'       => 'Entity',

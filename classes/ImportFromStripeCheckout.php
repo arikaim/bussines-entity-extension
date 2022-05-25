@@ -44,14 +44,14 @@ class ImportFromStripeCheckout extends Action
         $type = $content['type'] ?? EntityInterface::TYPE_PERSON;
         $role = $content['role'] ?? EntityInterface::ROLE_CUSTOMER;
         $userId = $content['user_id'] ?? null;
-        $userId = (empty($userId) == true) ? null : $userId;
+        $userId = (empty($userId) == true) ? null : (int)$userId;
         $addressId = $content['address_id'] ?? null;
-        $addressId = (empty($addressId) == true) ? null : $addressId;
+        $addressId = (empty($addressId) == true) ? null : (int)$addressId;
         
-        $entity = Model::Entity('entity')->createEntity($name,$type,(int)$userId,$role);
+        $entity = Model::Entity('entity')->createEntity($name,$type,$userId,$role);
         if (\is_object($entity) == true && empty($addressId) == false) {
             // add address relation
-            $entity->address()->linkAddress('home',(int)$addressId);
+            $entity->address()->linkAddress('home',$addressId);
         }
         
         return $entity;

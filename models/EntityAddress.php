@@ -116,7 +116,7 @@ class EntityAddress extends Model
      * @param integer|null $entityId
      * @return boolean
      */
-    public function linkAddress(string $type, int $addressId, ?int $entityId): bool
+    public function linkAddress(string $type, int $addressId, ?int $entityId = null): bool
     {
         $entityId = $entityId ?? $this->entity_id;
         $model = $this->findAddress($type,$entityId);

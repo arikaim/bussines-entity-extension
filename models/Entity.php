@@ -18,6 +18,7 @@ use Arikaim\Core\Db\Traits\Status;
 use Arikaim\Core\Db\Traits\DateCreated;
 use Arikaim\Core\Db\Traits\DateUpdated;
 use Arikaim\Core\Db\Traits\SoftDelete;
+use Arikaim\Core\Db\Traits\UserRelation;
 use Arikaim\Extensions\Entity\Classes\EntityInterface;
 
 /**
@@ -27,6 +28,7 @@ class Entity extends Model
 {
     use Uuid,    
         Status,   
+        UserRelation,
         DateCreated,
         DateUpdated,
         SoftDelete,

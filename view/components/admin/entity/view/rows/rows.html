@@ -33,6 +33,7 @@
             <div class="ui basic label">
                 {{ item.relation_type }}
             </div>           
-        </td>               
+        </td>   
+        <td>{{ item.user.user_name_or_email|default('..') }}</td>            
     </tr>
 {% endfor %}

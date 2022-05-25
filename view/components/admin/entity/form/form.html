@@ -10,10 +10,12 @@
     {% if role is not empty %}
         <input type="hidden" name="role" id="role" value="{{ role }}">  
     {% endif %}   
-    <div class="field required">
-        <label>{{ fields.name.label }}</label>
-        <input role="empty" type="text" name="name" id="name" {{ fields.name.placeholder|attr('placeholder') }} value="{{ entity.name }}">  
-    </div> 
+    <div class="two fields">
+        <div class="field required">
+            <label>{{ fields.name.label }}</label>
+            <input role="empty" type="text" name="name" id="name" {{ fields.name.placeholder|attr('placeholder') }} value="{{ entity.name }}">  
+        </div> 
+    </div>
     {% if type_edit == true %}
     <div class="inline fields">
         <div class="field">

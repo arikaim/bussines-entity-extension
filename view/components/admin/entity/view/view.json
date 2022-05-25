@@ -8,6 +8,7 @@
         "status": "Status",
         "type": "Type",
         "name": "Name",
+        "user": "User",
         "date": "Date Created"       
     }
 }

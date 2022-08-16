@@ -37,33 +37,32 @@ class EntityApi extends ApiController
     */
     public function getList($request, $response, $data) 
     {       
-        $this->onDataValid(function($data) {   
-            $search = $data->get('query','');
-            $role = $data->get('role','all');            
-            $size = $data->get('size',5);
-            $dataField = $data->get('data_field','uuid');     
+        $data->validate(true);
 
-            $model = Model::Entity('entity')->getActive();
-            if ($role != 'all' && empty($role) == false) {
-                $model = $model->queryByRole($role);
+        $search = $data->get('query','');
+        $role = $data->get('role','all');            
+        $size = $data->get('size',5);
+        $dataField = $data->get('data_field','uuid');     
+
+        $model = Model::Entity('entity')->getActive();
+        if ($role != 'all' && empty($role) == false) {
+            $model = $model->queryByRole($role);
+        }
+        $model = $model->where('name','like',"%$search%")->take($size)->get();
+
+        $this->setResponse(\is_object($model),function() use($model,$dataField) {     
+            $items = [];
+            foreach ($model as $item) {
+                $items[] = [
+                    'name' => $item['name'],
+                    'value' => $item[$dataField]
+                ];
             }
-            $model = $model->where('name','like',"%$search%")->take($size)->get();
-
-            $this->setResponse(\is_object($model),function() use($model,$dataField) {     
-                $items = [];
-                foreach ($model as $item) {
-                    $items[] = [
-                        'name' => $item['name'],
-                        'value' => $item[$dataField]
-                    ];
-                }
-                $this                    
-                    ->field('success',true)
-                    ->field('results',$items);  
-            },'errors.list');                                
-        });
-        $data->validate();
-
+            $this                    
+                ->field('success',true)
+                ->field('results',$items);  
+        },'errors.list');                                
+      
         return $this->getResponse(true);
     }
 }

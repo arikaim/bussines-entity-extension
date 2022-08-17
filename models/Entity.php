@@ -105,7 +105,7 @@ class Entity extends Model
      * @param int|null $entityId
      * @return Model
      */
-    public function address(?int $entityId = null)
+    public function address(?int $entityId = null): object
     {
         $addresses = new EntityAddress();
         $addresses->entity_id = $entityId ?? $this->id;
@@ -123,7 +123,7 @@ class Entity extends Model
     {
         $model = $this->where('name','=',$name)->first();
 
-        return \is_object($model);
+        return ($model !== null);
     }
 
     /**
@@ -136,7 +136,25 @@ class Entity extends Model
      */
     public function scopeQueryByRole($query, ?string $role, ?int $userId = null)
     {
-        return $query->where($role,'=',1);
+        $query->where($role,'=',1);
+
+        return (empty($userId) == true) ? $query : $query->where('user_id','=',$userId);
+    }
+
+    /**
+     * Find or create entity
+     *
+     * @param string  $name
+     * @param string  $type
+     * @param integer $userId
+     * @param string  $role
+     * @return object|null
+     */
+    public function findOrCreate(string $name, string $type, int $userId, string $role): ?object
+    {
+        $entity = $this->queryByRole($role,$userId)->first();
+
+        return ($entity !== null) ? $entity : $this->createEntity($name,$type,$userId,$role);
     }
 
     /**
@@ -146,31 +164,27 @@ class Entity extends Model
      * @param string $type
      * @param integer|null $userId
      * @param string|null $role
-     * @return Model|false
+     * @return Model|null
      */
-    public function createEntity(string $name, string $type, ?int $userId, ?string $role)
+    public function createEntity(string $name, string $type, ?int $userId, ?string $role): ?object
     {
         if ($this->hasEntity($name) == true) {
-            return false;
+            return null;
         }
 
         $entityType = $this->crateEntityTypeModel($type);
-        if (\is_object($entityType) == false) {
-            return false;
+        if ($entityType == null) {
+            return null;
         }
-
-        $data = [
+      
+        $data = \array_merge([
             'name'          => $name,
             'relation_type' => $type,
             'relation_id'   => $entityType->id,
             'user_id'       => $userId
-        ];
-        $roleData = $this->resolveRole($role);
-        $data = \array_merge($data,$roleData);
+        ],$this->resolveRole($role));
        
-        $model = $this->create($data);
-        
-        return $model;       
+        return $this->create($data);           
     }
 
     /**
@@ -212,14 +226,12 @@ class Entity extends Model
      * Create entity model type
      *
      * @param string $type
-     * @return object|false
+     * @return object|null
      */
-    public function crateEntityTypeModel(string $type)
+    public function crateEntityTypeModel(string $type): ?object
     {
         $model = $this->getEntityTypeModel($type);
-        $created = $model->create([]);
-
-        return (\is_object($created) == true) ? $created : false;
+        return $model->create([]);
     }
 
     /**
@@ -229,7 +241,7 @@ class Entity extends Model
      * @param integer|null $id
      * @return Model|null
      */
-    public function getEntityTypeModel(string $type, ?int $id = null) 
+    public function getEntityTypeModel(string $type, ?int $id = null): ?object
     {
         switch ($type) {
             case EntityInterface::TYPE_PERSON:
@@ -239,7 +251,7 @@ class Entity extends Model
                 $model = new Organization();
                 break;
             default:
-                return false;
+                return null;
         }
         
         return (empty($id) == false) ? $model->findById($id) : $model;

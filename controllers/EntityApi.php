@@ -114,19 +114,21 @@ class EntityApi extends ApiController
         }
         $model = $model->where('name','like',"%$search%")->take($size)->get();
 
-        $this->setResponse(\is_object($model),function() use($model,$dataField) {     
-            $items = [];
-            foreach ($model as $item) {
-                $items[] = [
-                    'name' => $item['name'],
-                    'value' => $item[$dataField]
-                ];
-            }
-            $this                    
-                ->field('success',true)
-                ->field('results',$items);  
-        },'errors.list');                                
-      
+        if ($model == null) {
+            $this->error('errors.list','Error create entity list');
+        }
+
+        $items = [];
+        foreach ($model as $item) {
+            $items[] = [
+                'name'  => $item['name'],
+                'value' => $item[$dataField]
+            ];
+        }
+        $this                    
+            ->field('success',true)
+            ->field('results',$items);  
+                                        
         return $this->getResponse(true);
     }
 }

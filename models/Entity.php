@@ -142,6 +142,18 @@ class Entity extends Model
     }
 
     /**
+     * Find entity by role
+     *
+     * @param string  $role
+     * @param integer $userId
+     * @return object|null
+     */
+    public function findEntityByRole(string $role, int $userId): ?object
+    {
+        return $this->queryByRole($role,$userId)->first();
+    }
+
+    /**
      * Find or create entity
      *
      * @param string  $name

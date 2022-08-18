@@ -43,8 +43,8 @@ class EntityApi extends ApiController
 
         $type = $data->get('relation_type','person');
         $name = $data->get('name',null);
-        $role = $data->get('role',null);
-        $userId = $this->getUserId();
+        $role = $data->get('role','customer');
+        $userId = $data->get('user',$this->getUserId());
 
         $entity = Model::Entity('entity')->createEntity($name,$type,$userId,$role);      
         if ($entity == null) {

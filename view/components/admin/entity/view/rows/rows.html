@@ -1,6 +1,6 @@
 {% set entity = createModel('Entity','entity') %}
 {% if role is not empty %}    
-    {% set entity = entity.queryByRole(role,service('access').getId()) %}  
+    {% set entity = entity.queryByRole(role) %}  
 {% endif %}
 
 {% set entity = entity.orderBy('name') %}

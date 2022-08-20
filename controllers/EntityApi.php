@@ -44,7 +44,8 @@ class EntityApi extends ApiController
         $type = $data->get('relation_type','person');
         $name = $data->get('name',null);
         $role = $data->get('role','customer');
-        $userId = $data->get('user',$this->getUserId());
+        $userId = (int)$data->get('user',$this->getUserId());
+        $userId = ($userId == 0) ? $this->getUserId() : $userId;
 
         $entity = Model::Entity('entity')->createEntity($name,$type,$userId,$role);      
         if ($entity == null) {
@@ -56,6 +57,7 @@ class EntityApi extends ApiController
             ->message('add','Added successfully.')
             ->field('uuid',$entity->uuid)
             ->field('type',$type)
+            ->field('user',$userId)
             ->field('role',$role);  
     }
 
@@ -107,10 +109,14 @@ class EntityApi extends ApiController
         $role = $data->get('role','all');            
         $size = $data->get('size',5);
         $dataField = $data->get('data_field','uuid');     
+        $user = $data->get('user',null);
 
         $model = Model::Entity('entity')->getActive();
         if ($role != 'all' && empty($role) == false) {
             $model = $model->queryByRole($role);
+        }
+        if (empty($user) == false) {
+            $model = $model->userQuery($user);
         }
         $model = $model->where('name','like',"%$search%")->take($size)->get();
 

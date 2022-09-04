@@ -30,7 +30,7 @@ function EntityView() {
                 title: self.getMessage('remove.title'),
                 description: message
             },function() {
-                currency.delete(uuid,function(result) {
+                entity.delete(uuid,function(result) {
                     $('#' + uuid).remove();                
                 });
             });

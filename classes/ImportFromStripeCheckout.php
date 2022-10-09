@@ -49,7 +49,7 @@ class ImportFromStripeCheckout extends Action
         $addressId = (empty($addressId) == true) ? null : (int)$addressId;
         
         $entity = Model::Entity('entity')->createEntity($name,$type,$userId,$role);
-        if (\is_object($entity) == true && empty($addressId) == false) {
+        if ($entity != null && empty($addressId) == false) {
             // add address relation
             $entity->address()->linkAddress('home',$addressId);
         }

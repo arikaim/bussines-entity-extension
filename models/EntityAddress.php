@@ -87,11 +87,9 @@ class EntityAddress extends Model
      * @param integer|null $entityId
      * @return Model|null
      */
-    public function findAddress(string $type, ?int $entityId = null)
+    public function findAddress(string $type, ?int $entityId = null): ?object
     {
-        $query = $this->findAddressQuery($type,$entityId);
-
-        return $query->first();
+        return $this->findAddressQuery($type,$entityId)->first();       
     }
 
     /**
@@ -103,9 +101,7 @@ class EntityAddress extends Model
      */
     public function hasAddress(string $type, ?int $entityId = null): bool
     {      
-        $model = $this->findAddress($type,$entityId);
-
-        return \is_object($model);
+        return ($this->findAddress($type,$entityId) != null);
     } 
 
     /**
@@ -120,9 +116,9 @@ class EntityAddress extends Model
     {
         $entityId = $entityId ?? $this->entity_id;
         $model = $this->findAddress($type,$entityId);
-        if (\is_object($model) == true) {
+        if ($model != null) {
             // address link exists
-            return false;
+            return true;
         }
 
         $relation = $this->create([
@@ -131,7 +127,7 @@ class EntityAddress extends Model
             'address_id'   => $addressId
         ]);
 
-        return \is_object($relation);
+        return ($relation != null);
     }
 
     /**
@@ -141,12 +137,11 @@ class EntityAddress extends Model
      * @param string $type
      * @return Model|null
      */
-    public function findOrCreate(string $type, ?int $entityId = null)
+    public function findOrCreate(string $type, ?int $entityId = null): ?object
     {
         $entityId = $entityId ?? $this->entity_id;
         $model = $this->findAddress($type,$entityId);
-     
-        if (\is_object($model) == true) {
+        if ($model != null) {
             return $model->address;
         }
 
@@ -160,6 +155,6 @@ class EntityAddress extends Model
             'address_id'   => $address->id
         ]);
 
-        return (\is_object($relation) == true) ? $address : null;
+        return ($relation != null) ? $address : null;
     }
 }

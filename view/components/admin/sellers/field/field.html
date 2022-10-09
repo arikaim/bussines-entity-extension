@@ -1,0 +1,14 @@
+<input type="hidden" name="{{ name|default('seller_id') }}" value="{{ seller.id }}">
+<div
+    id="{{ component_id }}"
+    class="ui action input {{ class }}">
+    <input 
+        {{ field_class|attr('class') }}              
+        readonly        
+        type="text" 
+        placeholder="{{ labels.placeholder }}" 
+        value="{{ seller.name }}">
+    <a class="ui icon basic button edit-seller-button">
+        <i class="icon blue edit"></i>
+    </a>
+</div>

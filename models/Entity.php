@@ -82,7 +82,7 @@ class Entity extends Model
         $this->address($id)->findAddressQuery(null,$model->id)->delete();
         // delete entity type model
         $type = $this->getEntityTypeModel($model->relation_type,$model->relation_id);
-        if (\is_object($type) == true) {
+        if ($type != null) {
             $type->delete();
         }
         // delete entity
@@ -169,6 +169,12 @@ class Entity extends Model
         return ($entity !== null) ? $entity : $this->createEntity($name,$type,$userId,$role);
     }
 
+    
+    public function findOrCreateSeller(string $name, int $userId): ?object
+    {
+        return $this->findOrCreate($name,EntityInterface::TYPE_ORGANIZATION,$userId,EntityInterface::ROLE_SELLER);
+    }
+
     /**
      * Create entity
      *
@@ -243,7 +249,8 @@ class Entity extends Model
     public function crateEntityTypeModel(string $type): ?object
     {
         $model = $this->getEntityTypeModel($type);
-        return $model->create([]);
+
+        return ($model == null) ? null : $model->create([]);
     }
 
     /**

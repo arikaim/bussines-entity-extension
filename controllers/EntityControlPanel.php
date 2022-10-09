@@ -68,7 +68,7 @@ class EntityControlPanel extends ControlPanelApiController
         $entity = Model::Entity('entity');
         $model = $entity->createEntity($name,$type,$userId,$role);
 
-        $this->setResponse(\is_object($model),function() use($model, $role, $type) {            
+        $this->setResponse(($model != null),function() use($model, $role, $type) {            
             $this
                 ->message('add')
                 ->field('uuid',$model->uuid)

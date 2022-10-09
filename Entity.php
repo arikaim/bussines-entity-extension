@@ -47,6 +47,8 @@ class Entity extends Extension
             'person'       => 'Person',
             'organization' => 'Organization'
         ]);
+        // Ssevice
+        $this->registerService('EntityService');        
     } 
     
     /**

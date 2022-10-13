@@ -110,7 +110,8 @@ class EntityApi extends ApiController
         $size = $data->get('size',5);
         $dataField = $data->get('data_field','uuid');     
         $user = $data->get('user',null);
-
+        $user = ($user == 'null') ? null : $user;
+        
         $model = Model::Entity('entity')->getActive();
         if ($role != 'all' && empty($role) == false) {
             $model = $model->queryByRole($role);

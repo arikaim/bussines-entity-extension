@@ -16,7 +16,10 @@
 {% endif %}
 {% for item in items %}
     <tr id="{{ item.uuid }}">        
-        <td>            
+        <td>         
+            <button class="ui icon mini basic button entity-details" uuid="{{ item.uuid }}">
+                <i class="icon info"></i>
+            </button>   
             <button class="ui icon mini basic button edit-entity" uuid="{{ item.uuid }}">
                 <i class="icon edit"></i>
             </button>

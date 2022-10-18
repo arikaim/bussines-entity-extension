@@ -1,0 +1,73 @@
+{% if uuid is not empty %}
+    {% set entity = createModel('Entity','entity').findById(uuid) %}
+{% endif %}
+{% component 'semantic~panel' %}
+    <table class="ui very basic definition table">
+        <tbody>
+            <tr>
+                <td class="right aligned">{{ labels.uuid }}</td>
+                <td>
+                    <div class="ui basic label">{{ entity.id }}</div>
+                    {{ entity.uuid }}
+                </td>
+            </tr>
+            <tr>
+                <td class="right aligned">{{ labels.status }}</td>
+                <td>
+                    {{ component('semantic~status.label',{ status: entity.status }) }}
+                </td>
+            </tr>    
+            <tr>
+                <td class="right aligned">{{ labels.name }}</td>
+                <td>{{ entity.name }}</td>
+            </tr>          
+            <tr>
+                <td class="right aligned">{{ labels.type }}</td>
+                <td>
+                    <div class="ui basic label">
+                        {{ entity.relation_type }}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="right aligned">{{ labels.role }}</td>
+                <td>
+                    {% for role in entity.roles %}
+                    <div class="ui basic label">
+                        {{ role }}
+                    </div>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td class="right aligned">{{ labels.address }}</td>
+                <td>
+                    {% for item in entity.addresses %}            
+                        {{  component('content::item',{ 
+                                content_type: 'address', 
+                                content_id: item.address.uuid, 
+                                close_button: false 
+                            }) 
+                        }}                        
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td class="right aligned">{{ labels.user }}</td>
+                <td>{{ entity.user.username_or_email }}</td>
+            </tr>
+            <tr>
+                <td class="right aligned">{{ labels.date }}</td>
+                <td>{{ entity.date_created|dateTimeFormat }}</td>
+            </tr>
+            {% if entity.date_updated is not empty %}
+            <tr>
+                <td class="right aligned">{{ labels.updated }}</td>
+                <td>
+                    {{ entity.date_updated|dateFormat }}
+                </td>
+            </tr> 
+            {% endif %}
+        </tbody>
+    </table>          
+{% endcomponent%}

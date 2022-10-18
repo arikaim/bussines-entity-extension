@@ -14,6 +14,16 @@ function EntityView() {
             }); 
         });
         
+        arikaim.ui.button('.entity-details',function(element) {
+            var uuid = $(element).attr('uuid');
+
+            arikaim.page.loadContent({
+                id: 'details_content',
+                component: 'entity::admin.entity.details',
+                params: { uuid: uuid }
+            }); 
+        });
+
         $('.status-dropdown').dropdown({
             onChange: function(value) {
                 var uuid = $(this).attr('uuid');

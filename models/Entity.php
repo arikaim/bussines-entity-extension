@@ -70,6 +70,16 @@ class Entity extends Model
     public $timestamps = false;
 
     /**
+     * Address relation
+     *
+     * @return Relation|null
+     */
+    public function addresses()
+    {
+        return $this->hasMany(EntityAddress::class,'entity_id');
+    }
+
+    /**
      * Delete entity
      *
      * @param integer|null $id
@@ -100,6 +110,38 @@ class Entity extends Model
     } 
 
     /**
+     * Get roles attribute
+     *
+     * @return array
+     */
+    public function getRolesAttribute(): array
+    {
+        $roles = [];
+
+        if ($this->customer == 1) {
+            $roles[] = EntityInterface::ROLE_CUSTOMER;
+        } 
+
+        if ($this->vendor == 1) {
+            $roles[] = EntityInterface::ROLE_VENDOR;
+        }
+
+        if ($this->supplier == 1) {
+            $roles[] = EntityInterface::ROLE_SUPPLIER;
+        }
+
+        if ($this->employee == 1) {
+            $roles[] = EntityInterface::ROLE_EMPLOYEE;
+        }
+
+        if ($this->seller == 1) {
+            $roles[] = EntityInterface::ROLE_SELLER;
+        }
+        
+        return $roles;
+    }
+
+    /**
      * Entity address
      *
      * @param int|null $entityId
@@ -121,9 +163,7 @@ class Entity extends Model
      */
     public function hasEntity(string $name): bool
     {
-        $model = $this->where('name','=',$name)->first();
-
-        return ($model !== null);
+        return ($this->where('name','=',$name)->first() !== null);       
     }
 
     /**
@@ -169,7 +209,13 @@ class Entity extends Model
         return ($entity !== null) ? $entity : $this->createEntity($name,$type,$userId,$role);
     }
 
-    
+    /**
+     * Fiond or create seller entity
+     *
+     * @param string  $name
+     * @param integer $userId
+     * @return object|null
+     */
     public function findOrCreateSeller(string $name, int $userId): ?object
     {
         return $this->findOrCreate($name,EntityInterface::TYPE_ORGANIZATION,$userId,EntityInterface::ROLE_SELLER);

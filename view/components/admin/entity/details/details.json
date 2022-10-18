@@ -1,0 +1,15 @@
+{
+    "title": "Entity Details",
+    "icon": "info",
+    "labels": {
+        "uuid": "Uuid",
+        "name": "Name",    
+        "date": "Created",      
+        "status": "Status",
+        "updated": "Updated",
+        "role": "Role",
+        "address": "Address",
+        "user": "User",
+        "type": "Type"
+    }
+}

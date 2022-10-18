@@ -80,7 +80,7 @@ class EntityApi extends ApiController
             return false;
         }
         // check access
-        $this->requireUser($entity->user_id);
+        //$this->requireUser($entity->user_id);
 
         $result = $entity->update($data->toArray());
         if ($result === false) {

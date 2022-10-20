@@ -32,16 +32,6 @@ class EntityControlPanel extends ControlPanelApiController
     public function init()
     {
         $this->loadMessages('entity::admin.messages');
-    }
-
-    /**
-     * Constructor
-     *
-     * @param Container|null $container
-     */
-    public function __construct($container = null)
-    {
-        parent::__construct($container);
         $this->setExtensionName('entity');
         $this->setModelClass('Entity');
     }

@@ -172,11 +172,17 @@ class Entity extends Model
      * @param Builder $query
      * @param string|null $role
      * @param integer|null $userId
+     * @param null|string $name
      * @return Builder
      */
-    public function scopeQueryByRole($query, ?string $role, ?int $userId = null)
+    public function scopeQueryByRole($query, ?string $role, ?int $userId = null, ?string $name = null)
     {
-        $query->where($role,'=',1);
+        if (empty($name) == false) {
+            $query = $query->where('name','=',$name);
+        }
+        if (empty($role) == false) {
+            $query = $query->where($role,'=',1);
+        }
 
         return (empty($userId) == true) ? $query : $query->where('user_id','=',$userId);
     }
@@ -186,11 +192,12 @@ class Entity extends Model
      *
      * @param string  $role
      * @param integer $userId
+     * @param string|null $name
      * @return object|null
      */
-    public function findEntityByRole(string $role, int $userId): ?object
+    public function findEntityByRole(string $role, int $userId, ?string $name = null): ?object
     {
-        return $this->queryByRole($role,$userId)->first();
+        return $this->queryByRole($role,$userId,$name)->first();
     }
 
     /**
@@ -204,7 +211,7 @@ class Entity extends Model
      */
     public function findOrCreate(string $name, string $type, int $userId, string $role): ?object
     {
-        $entity = $this->queryByRole($role,$userId)->first();
+        $entity = $this->queryByRole($role,$userId,$name)->first();
 
         return ($entity !== null) ? $entity : $this->createEntity($name,$type,$userId,$role);
     }

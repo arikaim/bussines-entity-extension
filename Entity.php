@@ -41,6 +41,7 @@ class Entity extends Extension
         $this->registerContentType('Classes\\EntityContentType');
         // Content type actions
         $this->registerContentTypeAction('entity','Classes\\ImportFromStripeCheckout');  
+        $this->registerContentTypeAction('entity','Classes\\ImportFromPayPalCheckout');  
         // Relations map 
         $this->addRelationsMap([
             'entity'       => 'Entity',

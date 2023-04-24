@@ -14,9 +14,9 @@ use Arikaim\Core\Db\Model;
 use Arikaim\Extensions\Entity\Classes\EntityInterface;
 
 /**
- * Address import form stripe checkout transaction data
+ * Address import form PayPal checkout transaction data
  */
-class ImportFromStripeCheckout extends Action
+class ImportFromPayPalCheckout extends Action
 {
     /**
      * Init action
@@ -25,9 +25,9 @@ class ImportFromStripeCheckout extends Action
      */
     public function init(): void
     {
-        $this->setName('entity.import.stripe');
+        $this->setName('entity.import.paypal');
         $this->setType('import');
-        $this->setTitle('Import customer from stripe transaction data.');
+        $this->setTitle('Import customer from PayPal transaction data.');
     }
 
     /**
@@ -39,8 +39,11 @@ class ImportFromStripeCheckout extends Action
      */
     public function execute($content, ?array $options = []) 
     {
-        $name = $content['customer_details']['name'] ?? null;
-    
+        $name = \trim(($content['FIRSTNAME'] ?? '') . ' ' . ($content['LASTNAME'] ?? ''));
+        if (empty($name) == true) {
+            return false;
+        }
+        
         $type = $content['type'] ?? EntityInterface::TYPE_PERSON;
         $role = $content['role'] ?? EntityInterface::ROLE_CUSTOMER;
         $userId = $content['user_id'] ?? null;

@@ -159,11 +159,17 @@ class Entity extends Model
      * Return true if entity exist
      *
      * @param string $name
+     * @param int|null $userId
      * @return boolean
      */
-    public function hasEntity(string $name): bool
+    public function hasEntity(string $name, ?int $userId = null): bool
     {
-        return ($this->where('name','=',$name)->first() !== null);       
+        $query = $this->where('name','=',$name);
+        if (empty($userId) == false) {
+            $query = $query->where('user_id','=',$userId);
+        }
+
+        return ($query->first() !== null);       
     }
 
     /**
@@ -239,7 +245,7 @@ class Entity extends Model
      */
     public function createEntity(string $name, string $type, ?int $userId, ?string $role): ?object
     {
-        if ($this->hasEntity($name) == true) {
+        if ($this->hasEntity($name,$userId) == true) {
             return null;
         }
 

@@ -197,11 +197,11 @@ class Entity extends Model
      * Find entity by role
      *
      * @param string  $role
-     * @param integer $userId
+     * @param integer|int $userId
      * @param string|null $name
      * @return object|null
      */
-    public function findEntityByRole(string $role, int $userId, ?string $name = null): ?object
+    public function findEntityByRole(string $role, ?int $userId, ?string $name = null): ?object
     {
         return $this->queryByRole($role,$userId,$name)->first();
     }
@@ -211,11 +211,11 @@ class Entity extends Model
      *
      * @param string  $name
      * @param string  $type
-     * @param integer $userId
+     * @param integer|null $userId
      * @param string  $role
      * @return object|null
      */
-    public function findOrCreate(string $name, string $type, int $userId, string $role): ?object
+    public function findOrCreate(string $name, string $type, ?int $userId, string $role): ?object
     {
         $entity = $this->queryByRole($role,$userId,$name)->first();
 

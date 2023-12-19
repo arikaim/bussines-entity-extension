@@ -135,9 +135,10 @@ class EntityAddress extends Model
      *
      * @param integer|null $entityId
      * @param string $type
+     * @param int|null $userId
      * @return Model|null
      */
-    public function findOrCreate(string $type, ?int $entityId = null): ?object
+    public function findOrCreate(string $type, ?int $entityId = null, ?int $userId = null): ?object
     {
         $entityId = $entityId ?? $this->entity_id;
         $model = $this->findAddress($type,$entityId);
@@ -146,7 +147,8 @@ class EntityAddress extends Model
         }
 
         $address = Address::create([
-            'type' => $type
+            'type'      => $type,
+            'user_id'   => $userId
         ]);       
 
         $relation = $this->create([

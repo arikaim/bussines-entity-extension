@@ -12,6 +12,8 @@ namespace Arikaim\Extensions\Entity\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use Arikaim\Extensions\Address\Models\Address;
+use Arikaim\Extensions\Address\Models\Traits\AddressRelation;
+
 use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Find;
 
@@ -22,6 +24,7 @@ class EntityAddress extends Model
 {
     use 
         Uuid,
+        AddressRelation,
         Find;
     
     /**
@@ -48,16 +51,6 @@ class EntityAddress extends Model
      * @var boolean
      */
     public $timestamps = false;
-
-    /**
-     * Address relation
-     *
-     * @return Relation|null
-     */
-    public function address() 
-    {
-        return $this->belongsTo(Address::class,'address_id');
-    }
 
     /**
      * Address query scope

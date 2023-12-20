@@ -53,6 +53,10 @@ class EntityApi extends ApiController
             return false;
         }
                  
+        $entity->entityType()->update([
+            'note' => $data->get('note',null)
+        ]);
+
         $this
             ->message('add','Added successfully.')
             ->field('uuid',$entity->uuid)
@@ -74,20 +78,29 @@ class EntityApi extends ApiController
         $data->validate(true);
 
         $uuid = $data->get('uuid',null);
+        $type = $data->get('relation_type','person');
+
         $entity = Model::Entity('entity')->findById($uuid);                   
         if ($entity == null) {
             $this->error('errors.id','Not vlaid entity id');
             return false;
         }
+
         // check access
-        //$this->requireUser($entity->user_id);
+        $this->requireUserOrControlPanel($entity->user_id);
 
         $result = $entity->update($data->toArray());
         if ($result === false) {
             $this->error('errors.udpate','Error save entity');
             return false;
         }
-              
+        
+        // update type
+        $entity->updateEntityType($type);
+        $entity->entityType()->update([
+            'note' => $data->get('note',null)
+        ]);
+       
         $this
             ->message('update','Saved successfully.')
             ->field('uuid',$entity->uuid);         

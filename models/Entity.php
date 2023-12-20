@@ -249,7 +249,7 @@ class Entity extends Model
             return null;
         }
 
-        $entityType = $this->crateEntityTypeModel($type);
+        $entityType = $this->crateEntityTypeModel($type,$userId);
         if ($entityType == null) {
             return null;
         }
@@ -300,16 +300,38 @@ class Entity extends Model
     }
 
     /**
+     * Update entity type
+     *
+     * @param string $type
+     * @return void
+     */
+    public function updateEntityType(string $type)
+    {
+        $model = $this->getEntityTypeModel($type,$this->relation_id);
+        if ($model == null) {
+            $model = $this->crateEntityTypeModel($type,$this->user_id);
+        }
+        
+        $this->update([
+            'relation_type' => $type,
+            'relation_id'   => $model->id
+        ]);
+    }
+
+    /**
      * Create entity model type
      *
      * @param string $type
+     * @param int|null $userId
      * @return object|null
      */
-    public function crateEntityTypeModel(string $type): ?object
+    public function crateEntityTypeModel(string $type, ?int $userId = null): ?object
     {
         $model = $this->getEntityTypeModel($type);
 
-        return ($model == null) ? null : $model->create([]);
+        return ($model == null) ? null : $model->create([
+            'user_id'   =>  $userId
+        ]);
     }
 
     /**

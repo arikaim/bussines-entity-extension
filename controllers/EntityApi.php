@@ -28,6 +28,39 @@ class EntityApi extends ApiController
     }
 
     /**
+     * Delete entity
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
+    */
+    public function delete($request, $response, $data) 
+    {       
+        $data
+            ->validate(true);
+
+        $uuid = $data->get('uuid',null);
+        $entity = Model::Entity('entity')->findById($uuid);
+                
+        if ($entity == null) {
+            $this->error('errors.id','Not valid entity id');
+            return false;
+        }
+        
+        // check access
+        $this->requireUserOrControlPanel($entity->user_id);
+
+        $result = $entity->deleteEntity();
+
+        $this->setResponse(($result !== false),function() use($entity) {            
+            $this
+                ->message('delete')
+                ->field('uuid',$entity->uuid);  
+        },'errors.delete');
+    }
+
+    /**
      * Add entity
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request

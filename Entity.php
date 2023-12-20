@@ -32,6 +32,7 @@ class Entity extends Extension
         $this->addApiRoute('GET','/api/entity/list/{data_field}/{user}/{role}/[{query}]','EntityApi','getList','session'); 
         $this->addApiRoute('POST','/api/entity/add','EntityApi','add','session');   
         $this->addApiRoute('PUT','/api/entity/update','EntityApi','update','session');     
+        $this->addApiRoute('DELETE','/api/entity/delete/{uuid}','EntityApi','delete','session');     
         // Create db tables
         $this->createDbTable('EntitySchema');     
         $this->createDbTable('PersonSchema');   

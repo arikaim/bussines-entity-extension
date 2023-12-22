@@ -1,6 +1,7 @@
 {
     "labels": {       
         "customers": "Customers",
+        "suppliers": "Suppliers",
         "entity": "Enitites",
         "sellers": "Sellers"    
     }

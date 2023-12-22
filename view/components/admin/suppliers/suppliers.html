@@ -1,0 +1,15 @@
+{{  component('semantic~tabs.vertical',{ 
+        items: [ 
+            { title: labels.view, component: 'entity::admin.entity.view', icon: 'list', active: true, params: { role: 'supplier' } },
+            { title: labels.add, component: 'entity::admin.suppliers.add', icon: 'plus' },
+            { title: labels.edit, component: 'entity::admin.suppliers.edit', icon: 'edit' }
+        ], 
+        menu: { id: 'suppliers_menu' }, 
+        item_class: 'suppliers-tab-item',
+        content: { 
+            component: 'entity::admin.entity.view', 
+            params: { role: 'supplier' },
+            id: "entity_content" 
+        } 
+    })
+}}

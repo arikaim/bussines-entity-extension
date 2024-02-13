@@ -34,10 +34,10 @@ class Entity extends Extension
         $this->addApiRoute('PUT','/api/entity/update','EntityApi','update','session');     
         $this->addApiRoute('DELETE','/api/entity/delete/{uuid}','EntityApi','delete','session');     
         // Create db tables
-        $this->createDbTable('EntitySchema');     
-        $this->createDbTable('PersonSchema');   
-        $this->createDbTable('OrganizationSchema');  
-        $this->createDbTable('EntityAddressSchema');       
+        $this->createDbTable('Entity');     
+        $this->createDbTable('Person');   
+        $this->createDbTable('Organization');  
+        $this->createDbTable('EntityAddress');       
         // Content Types
         $this->registerContentType('Classes\\EntityContentType');
         // Content type actions

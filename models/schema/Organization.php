@@ -14,7 +14,7 @@ use Arikaim\Core\Db\Schema;
 /**
  * Organization db table
  */
-class OrganizationSchema extends Schema  
+class Organization extends Schema  
 {    
     /**
      * Table name

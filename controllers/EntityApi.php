@@ -165,7 +165,7 @@ class EntityApi extends ApiController
         if (empty($user) == false) {
             $model = $model->userQuery($user);
         }
-        $model = $model->where('name','like',"%$search%")->take($size)->get();
+        $model = $model->searchIgnoreCase('name',$search)->take($size)->get();
 
         if ($model == null) {
             $this->error('errors.list','Error create entity list');

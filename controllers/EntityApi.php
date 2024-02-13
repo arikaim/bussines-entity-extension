@@ -112,15 +112,12 @@ class EntityApi extends ApiController
 
         $uuid = $data->get('uuid',null);
         $type = $data->get('relation_type','person');
-
+       
         $entity = Model::Entity('entity')->findById($uuid);                   
         if ($entity == null) {
             $this->error('errors.id','Not vlaid entity id');
             return false;
         }
-
-        // check access
-        $this->requireUserOrControlPanel($entity->user_id);
 
         $result = $entity->update($data->toArray());
         if ($result === false) {

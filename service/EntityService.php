@@ -12,6 +12,7 @@ namespace Arikaim\Extensions\Entity\Service;
 use Arikaim\Core\Db\Model;
 use Arikaim\Core\Service\Service;
 use Arikaim\Core\Service\ServiceInterface;
+use Arikaim\Extensions\Entity\Classes\EntityInterface;
 
 /**
  * Entity service class
@@ -26,6 +27,17 @@ class EntityService extends Service implements ServiceInterface
     public function boot()
     {
         $this->setServiceName('entity');
+    }
+
+    /**
+     * Find seller
+     *
+     * @param integer $userId
+     * @return object|null
+     */
+    public function findSeller(int $userId): ?object
+    {
+        return Model::Entity('entity')->queryByRole(EntityInterface::ROLE_SELLER,$userId)->first();
     }
 
     /**

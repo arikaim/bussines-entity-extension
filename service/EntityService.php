@@ -32,12 +32,14 @@ class EntityService extends Service implements ServiceInterface
     /**
      * Find seller
      *
-     * @param integer $userId
+     * @param integer|null $userId
      * @return object|null
      */
-    public function findSeller(int $userId): ?object
+    public function findSeller(?int $userId): ?object
     {
-        return Model::Entity('entity')->queryByRole(EntityInterface::ROLE_SELLER,$userId)->first();
+        return (empty($userId) == true) ? 
+            null :
+            Model::Entity('entity')->queryByRole(EntityInterface::ROLE_SELLER,$userId)->first();
     }
 
     /**

@@ -1,7 +1,10 @@
 {% set entity = createModel('Entity','entity').findById(uuid) %}
 {% set address_type = (entity.is_person) ? 'home' : 'business' %}
 <div class="ui stackable tabular menu entity-edit-tabs">      
-    <div class="item link active edit-entity-tab-item" component="entity::admin.entity.form" uuid="{{ uuid }}">
+    <div 
+        class="item link active edit-entity-tab-item" 
+        component="entity::admin.entity.form" 
+        uuid="{{ uuid }}">
         <i class="icon stream blue"></i>
         {{ labels.details }}     
     </div>  

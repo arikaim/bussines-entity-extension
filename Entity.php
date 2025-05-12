@@ -23,21 +23,12 @@ class Entity extends Extension
     */
     public function install()
     {        
-        // Control Panel
-        $this->addApiRoute('POST','/api/admin/entity/add','EntityControlPanel','add','session');   
-        $this->addApiRoute('PUT','/api/admin/entity/update','EntityControlPanel','update','session'); 
-        $this->addApiRoute('DELETE','/api/admin/entity/delete/{uuid}','EntityControlPanel','delete','session');     
-        $this->addApiRoute('PUT','/api/admin/entity/status','EntityControlPanel','setStatus','session');        
         // Api Routes
         $this->addApiRoute('GET','/api/entity/list/{data_field}/{user}/{role}/[{query}]','EntityApi','getList','session'); 
         $this->addApiRoute('POST','/api/entity/add','EntityApi','add','session');   
         $this->addApiRoute('PUT','/api/entity/update','EntityApi','update','session');     
         $this->addApiRoute('DELETE','/api/entity/delete/{uuid}','EntityApi','delete','session');     
-        // Create db tables
-        $this->createDbTable('Entity');     
-        $this->createDbTable('Person');   
-        $this->createDbTable('Organization');  
-        $this->createDbTable('EntityAddress');       
+        $this->addApiRoute('PUT','/api/entity/status','EntityApi','setStatus','session');        
         // Content Types
         $this->registerContentType('Classes\\EntityContentType');
         // Content type actions
@@ -52,7 +43,16 @@ class Entity extends Extension
         // Ssevice
         $this->registerService('EntityService');        
     } 
-    
+
+    public function dbInstall(): void
+    {  
+        // Create db tables
+        $this->createDbTable('Entity');     
+        $this->createDbTable('Person');   
+        $this->createDbTable('Organization');  
+        $this->createDbTable('EntityAddress');     
+    }
+
     /**
      * UnInstall extension
      *

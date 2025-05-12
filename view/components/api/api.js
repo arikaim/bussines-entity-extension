@@ -13,6 +13,15 @@ function EntityApi() {
     this.delete = function(uuid, onSuccess, onError) {
         return arikaim.delete('/api/entity/delete/' + uuid,onSuccess,onError);          
     };
+
+    this.setStatus = function(uuid, status, onSuccess, onError) {           
+        var data = { 
+            uuid: uuid, 
+            status: status 
+        };
+
+        return arikaim.put('/api/entity/status',data,onSuccess,onError);      
+    };
 }
 
 var entityApi = new EntityApi();

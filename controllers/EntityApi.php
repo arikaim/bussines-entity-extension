@@ -12,11 +12,18 @@ namespace Arikaim\Extensions\Entity\Controllers;
 use Arikaim\Core\Db\Model;
 use Arikaim\Core\Controllers\ApiController;
 
+use Arikaim\Core\Controllers\Traits\Status;
+use Arikaim\Core\Controllers\Traits\SoftDelete;
+
 /**
  * Entity api controller
 */
 class EntityApi extends ApiController
 {
+    use 
+        Status,
+        SoftDelete;
+
     /**
      * Init controller
      *
@@ -25,6 +32,12 @@ class EntityApi extends ApiController
     public function init()
     {
         $this->loadMessages('entity::messages');
+        $this->setExtensionName('entity');
+        $this->setModelClass('Entity');
+
+        $this->onBeforeStatusUpdate(function ($status,$model) {
+            $this->requireUserOrControlPanel($model->user_id);
+        });
     }
 
     /**
@@ -33,7 +46,7 @@ class EntityApi extends ApiController
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @return mixed
     */
     public function delete($request, $response, $data) 
     {       
@@ -66,7 +79,7 @@ class EntityApi extends ApiController
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @return mixed
     */
     public function add($request, $response, $data) 
     {       
@@ -104,7 +117,7 @@ class EntityApi extends ApiController
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @return mixed
     */
     public function update($request, $response, $data) 
     {        
@@ -118,6 +131,9 @@ class EntityApi extends ApiController
             $this->error('errors.id','Not vlaid entity id');
             return false;
         }
+
+        // Check access
+        $this->requireUserOrControlPanel($entity->user_id);
 
         $result = $entity->update($data->toArray());
         if ($result === false) {
@@ -142,7 +158,7 @@ class EntityApi extends ApiController
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @return mixed
     */
     public function getList($request, $response, $data) 
     {       

@@ -1,12 +1,9 @@
-{{  component('semantic~tabs.vertical',{ 
-        items: [ 
-            { title: labels.view, component: 'entity::admin.entity.view', icon: 'list', active: true }    
-        ], 
-        menu: { id: 'entity_menu' }, 
-        item_class: 'entity-tab-item',
-        content: { 
-            component: 'entity::admin.entity.view',            
-            id: "entity_content" 
-        } 
-    })
-}}
+<div class="flex flex-row items-start">
+    <div 
+        class="w-1/2 hidden px-2 h-full" 
+        id="details_content">
+    </div>
+    <div class="w-full">
+        {{ component('entity::admin.entity.view',{ role: role }) }}
+    </div>
+</div>

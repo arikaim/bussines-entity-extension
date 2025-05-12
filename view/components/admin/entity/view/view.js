@@ -4,13 +4,13 @@ function EntityView() {
     var self = this;
     
     this.initRows = function() {
-        arikaim.ui.button('.edit-entity',function(element) {
-            var uuid = $(element).attr('uuid');
+        arikaim.ui.loadComponentButton('.entity-action');
 
+        arikaim.ui.button('.edit-entity',function(element) {
             arikaim.page.loadContent({
-                id: 'entity_content',
+                id: 'details_content',
                 component: 'entity::admin.entity.edit',
-                params: { uuid: uuid }
+                params: { uuid: $(element).attr('uuid') }
             }); 
         });
         
@@ -27,7 +27,7 @@ function EntityView() {
         $('.status-dropdown').dropdown({
             onChange: function(value) {
                 var uuid = $(this).attr('uuid');
-                entity.setStatus(uuid,value);               
+                entityApi.setStatus(uuid,value);               
             }
         });
 
@@ -40,16 +40,42 @@ function EntityView() {
                 title: self.getMessage('remove.title'),
                 description: message
             },function() {
-                entity.delete(uuid,function(result) {
-                    $('#' + uuid).remove();                
+                entityApi.delete(uuid,function(result) {
+                    $('#row_' + uuid).remove();                
                 });
             });
-        });
+        });     
     };
 
     this.init = function() {
         this.loadMessages('entity::admin.customers');
         
+        arikaim.ui.loadComponentButton('.add-entity');
+        
+        arikaim.events.on('entity.create',function(uuid) {
+            arikaim.ui.loadComponent({
+                mountTo: 'items_list',
+                append: true,
+                params: {
+                    uuid: uuid
+                },
+                component: 'entity::admin.entity.view.item'
+            }) 
+        },'onEntityCreate');
+
+        arikaim.events.on('entity.update',function(uuid) {
+            arikaim.ui.loadComponent({
+                mountTo: 'row_' + uuid ,
+                replace: true,
+                params: {
+                    uuid: uuid
+                },
+                component: 'entity::admin.entity.view.item'
+            },function() {
+                self.initRows();
+            }) 
+        },'onEntityUpdate');
+
         var role = $('#items_list').attr('role').trim();
         var namespace = 'entity.' + role;
 
@@ -70,12 +96,13 @@ function EntityView() {
             paginator.reload();
             self.initRows();    
         },'entitySearch');   
+
+        this.initRows();
     };
 }
 
 var entityView = new createObject(EntityView,ControlPanelView);
 
 arikaim.component.onLoaded(function() {
-    entityView.init();
-    entityView.initRows();
+    entityView.init();  
 });

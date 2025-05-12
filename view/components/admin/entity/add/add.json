@@ -1,2 +1,9 @@
 {   
+    "icon": "plus",
+    "title": "Add Entity",
+    "roles": {
+        "customer": "Add customer",
+        "seller": "Add seller",
+        "supplier": "Add supplier"
+    }
 }

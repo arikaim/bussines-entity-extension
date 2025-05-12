@@ -1,0 +1,37 @@
+{% if uuid is not empty %}
+    {% set item = createModel('Entity','entity').findById(uuid) %}
+{% endif %}
+
+<tr id="row_{{ item.uuid }}">        
+    <td>         
+        <button 
+            class="ui icon mini basic button entity-details" 
+            uuid="{{ item.uuid }}">
+            <i class="icon info"></i>
+        </button>   
+        <button 
+            class="ui icon mini basic button edit-entity" 
+            uuid="{{ item.uuid }}">
+            <i class="icon edit"></i>
+        </button>
+        <button class="ui icon basic mini button delete-entity" uuid="{{ item.uuid }}" data-title="{{ item.title }}">
+            <i class="icon trash orange"></i>
+        </button>                        
+    </td>
+    <td>
+        {{ component('semantic~status.dropdown',{ status: item.status, uuid: item.uuid, skip: [2,3,4,5] }) }} 
+    </td>
+    <td>{{ item.date_created|dateFormat }}</td>
+    <td>{{ item.name }}</td>
+    <td>
+        <div class="ui basic blue mini label">
+            {{ item.relation_type }}
+        </div>   
+        {% for role in item.roles %}
+        <div class="ui basic mini label">
+            {{ role }}
+        </div>
+        {% endfor %}        
+    </td>   
+    <td>{{ item.user.user_name_or_email|default('..') }}</td>            
+</tr>

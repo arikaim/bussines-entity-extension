@@ -1,10 +1,31 @@
 {{  component('semantic~tabs',{ 
         items: [  
-            { id: 'customers_button', title: labels.customers, component: 'entity::admin.customers', icon: 'users', active: true },
-            { id: 'suppliers_button', title: labels.suppliers, component: 'entity::admin.suppliers', icon: 'truck' },
-            { id: 'sellers_button', title: labels.sellers, component: 'entity::admin.sellers', icon: 'store alternate' }
+            { 
+                id: 'customers_button', 
+                title: labels.customers, 
+                component: 'entity::admin.entity', 
+                params: { role: 'customer' },
+                icon: 'users', 
+                active: true 
+            },
+            { 
+                id: 'suppliers_button', 
+                title: labels.suppliers, 
+                component: 'entity::admin.entity', 
+                params: { role: 'supplier' },
+                icon: 'truck' 
+            },
+            { 
+                id: 'sellers_button', 
+                title: labels.sellers, 
+                component: 'entity::admin.entity', 
+                params: { role: 'seller' },
+                icon: 'store alternate' }
         ],
         menu: { extension: 'entity' },
-        content: { component: 'entity::admin.customers' } 
+        content: { 
+            component: 'entity::admin.entity',
+            params: { role: 'customer' }
+        } 
     })
 }}

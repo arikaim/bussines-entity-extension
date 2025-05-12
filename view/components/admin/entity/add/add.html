@@ -1,5 +1,11 @@
-{% component 'semantic~tabs.vertical.content' %}
+{% component 'semantic~panel' %}
+    {% set title = roles[role]|default(title) %}    
     <div class="mt-4 {{ class|default('w-full') }}">
-        {{ component('entity::admin.entity.form',{ type_edit: true, role: role, title: title }) }}  
+        {{  component('entity::admin.entity.form',{ 
+                type_edit: true, 
+                role: role, 
+                title: title 
+            }) 
+        }}  
     </div>   
 {% endcomponent %}

@@ -1,36 +1,45 @@
 <div class="ui segment">
     <div class="ui stackable grid">
-        <div class='four wide column'>
+        <div class="four wide column">                 
+            <button 
+                mountTo="details_content"
+                component="entity::admin.entity.add"
+                params="role:{{ role }}"
+                title="{{ tooltip.add }}"
+                class="ui mini curcular green icon button add-entity">
+                <i class="icon plus"></i>
+            </button>    
+        </div>        
+        <div class='ten wide column'>
             {{ component('semantic~search.form',{ namespace: 'entity.' ~ role }) }}
-        </div>
-        <div class="ten wide column">          
-        </div>
+        </div>        
         <div class="two wide column right aligned">       
             {{ component('semantic~paginator.dropdown',{ namespace: 'entity.' ~ role }) }}
         </div>
     </div>
 </div>
-<div class="flex flex-row flex-grow items-start w-full">
-    <div class="ui segment w-2/3 flex-grow">
-        <table class="ui compact stackable borderless basic table">
-            <thead>
-                <tr class="table-head">                          
-                    <th class="two wide">{{ columns.action }}</th>
-                    <th class="two wide">{{ columns.status }}</th>
-                    <th class="collapsing two wide">{{ columns.date }}</th>
-                    <th>{{ columns.name }}</th>                     
-                    <th class="collapsing one wide">{{ columns.type }}</th>
-                    <th class="four wide">{{ columns.user }}</th>
-                </tr>
-            </thead>
-            <tbody id="items_list" component="entity::admin.entity.view.rows" namespace="entity" role="{{ role }}">
-                {{ component('entity::admin.entity.view.rows',{ role: role }) }}   
-            </tbody>  
-        </table>
-        <div class="mt-2" id="paginator">
-            {{ component('semantic~paginator',{ namespace: 'entity.' ~ role }) }}
-        </div>
+<div class="ui segment w-full">
+    <table class="ui compact stackable borderless basic table">
+        <thead>
+            <tr class="table-head">                          
+                <th class="two wide">{{ columns.action }}</th>
+                <th class="two wide">{{ columns.status }}</th>
+                <th class="collapsing two wide">{{ columns.date }}</th>
+                <th>{{ columns.name }}</th>                     
+                <th class="three wide">{{ columns.type }}</th>
+                <th class="four wide">{{ columns.user }}</th>
+            </tr>
+        </thead>
+        <tbody 
+            id="items_list" 
+            component="entity::admin.entity.view.rows" 
+            namespace="entity" 
+            role="{{ role }}">
+            {{ component('entity::admin.entity.view.rows',{ role: role }) }}   
+        </tbody>  
+    </table>
+    {{ role }}
+    <div class="mt-2" id="paginator">
+        {{ component('semantic~paginator',{ namespace: 'entity.' ~ role }) }}
     </div>
-    <div class="w-1/3 hidden px-2 h-full" id="details_content">
-    </div>
-</div> 
+</div>   

@@ -34,7 +34,13 @@
             <div class="ui basic label">
                 {{ (type == 'person') ? fields.person.label : fields.organization.label }}
             </div>
+            {% for role in entity.roles %}
+                <div class="ui basic label">
+                    {{ role }}
+                </div>
+            {% endfor %}     
         </div>
     {% endif %}
+    
     {{ component('semantic~form.footer') }}   
 </form>

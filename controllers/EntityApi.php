@@ -87,7 +87,7 @@ class EntityApi extends ApiController
             ->addRule('text:min=2|required','name')
             ->validate(true); 
 
-        $type = $data->get('relation_type','person');
+        $type = $data->get('type','person');
         $name = $data->get('name',null);
         $role = $data->get('role','customer');
         $userId = (int)$data->get('user',$this->getUserId());
@@ -99,10 +99,6 @@ class EntityApi extends ApiController
             return false;
         }
                  
-        $entity->entityType()->update([
-            'note' => $data->get('note',null)
-        ]);
-
         $this
             ->message('add','Added successfully.')
             ->field('uuid',$entity->uuid)
@@ -124,7 +120,6 @@ class EntityApi extends ApiController
         $data->validate(true);
 
         $uuid = $data->get('uuid',null);
-        $type = $data->get('relation_type','person');
        
         $entity = Model::Entity('entity')->findById($uuid);                   
         if ($entity == null) {
@@ -141,12 +136,6 @@ class EntityApi extends ApiController
             return false;
         }
         
-        // update type
-        $entity->updateEntityType($type);
-        $entity->entityType()->update([
-            'note' => $data->get('note',null)
-        ]);
-       
         $this
             ->message('update','Saved successfully.')
             ->field('uuid',$entity->uuid);         

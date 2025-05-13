@@ -19,6 +19,7 @@ use Arikaim\Core\Db\Traits\DateCreated;
 use Arikaim\Core\Db\Traits\DateUpdated;
 use Arikaim\Core\Db\Traits\SoftDelete;
 use Arikaim\Core\Db\Traits\UserRelation;
+
 use Arikaim\Extensions\Entity\Classes\EntityInterface;
 
 /**
@@ -48,8 +49,7 @@ class Entity extends Model
      */
     protected $fillable = [
         'name',
-        'relation_type',
-        'relation_id',
+        'type',
         'status',
         'user_id',
         'customer',
@@ -57,6 +57,8 @@ class Entity extends Model
         'vendor',
         'employee',
         'seller',
+        'note',
+        'age',
         'date_created',
         'date_updated',
         'date_deleted'       
@@ -72,7 +74,7 @@ class Entity extends Model
     /**
      * Address relation
      *
-     * @return Relation|null
+     * @return object|null
      */
     public function addresses()
     {
@@ -90,11 +92,6 @@ class Entity extends Model
         $model = (empty($id) == false) ? $this->findById($id) : $this;
         // delete address relations
         $this->address($id)->findAddressQuery(null,$model->id)->delete();
-        // delete entity type model
-        $type = $this->getEntityTypeModel($model->relation_type,$model->relation_id);
-        if ($type != null) {
-            $type->delete();
-        }
         // delete entity
         return ($model->delete() !== false);
     }
@@ -106,7 +103,7 @@ class Entity extends Model
      */
     public function getIsPersonAttribute()
     {
-        return ($this->relation_type == 'person');
+        return ($this->type == 'person');
     } 
 
     /**
@@ -249,16 +246,10 @@ class Entity extends Model
             return null;
         }
 
-        $entityType = $this->crateEntityTypeModel($type,$userId);
-        if ($entityType == null) {
-            return null;
-        }
-      
         $data = \array_merge([
-            'name'          => $name,
-            'relation_type' => $type,
-            'relation_id'   => $entityType->id,
-            'user_id'       => $userId
+            'name'    => $name,
+            'type'    => $type,            
+            'user_id' => $userId
         ],$this->resolveRole($role));
        
         return $this->create($data);           
@@ -299,71 +290,4 @@ class Entity extends Model
         return $result;
     }
 
-    /**
-     * Update entity type
-     *
-     * @param string $type
-     * @return void
-     */
-    public function updateEntityType(string $type)
-    {
-        $model = $this->getEntityTypeModel($type,$this->relation_id);
-        if ($model == null) {
-            $model = $this->crateEntityTypeModel($type,$this->user_id);
-        }
-        
-        $this->update([
-            'relation_type' => $type,
-            'relation_id'   => $model->id
-        ]);
-    }
-
-    /**
-     * Create entity model type
-     *
-     * @param string $type
-     * @param int|null $userId
-     * @return object|null
-     */
-    public function crateEntityTypeModel(string $type, ?int $userId = null): ?object
-    {
-        $model = $this->getEntityTypeModel($type);
-
-        return ($model == null) ? null : $model->create([
-            'user_id'   =>  $userId
-        ]);
-    }
-
-    /**
-     * Get entity type model
-     *
-     * @param string $type
-     * @param integer|null $id
-     * @return Model|null
-     */
-    public function getEntityTypeModel(string $type, ?int $id = null): ?object
-    {
-        switch ($type) {
-            case EntityInterface::TYPE_PERSON:
-                $model = new Person();
-                break;
-            case EntityInterface::TYPE_ORGANIZATION:
-                $model = new Organization();
-                break;
-            default:
-                return null;
-        }
-        
-        return (empty($id) == false) ? $model->findById($id) : $model;
-    }
-
-    /**
-     * Get type relation
-     *
-     * @return Relation
-     */
-    public function entityType()
-    {
-        return $this->morphTo('relation');      
-    }
 }

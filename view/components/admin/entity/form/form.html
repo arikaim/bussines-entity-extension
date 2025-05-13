@@ -18,13 +18,13 @@
     <div class="inline fields">
         <div class="field">
             <div class="ui radio checkbox entity-type-radio" id="person_type">
-                <input type="radio" name="relation_type" {{ (type == 'person') ? 'checked="checked"' : '' }} value="person">
+                <input type="radio" name="type" {{ (type == 'person') ? 'checked="checked"' : '' }} value="person">
                 <label>{{ fields.person.label }}</label>
             </div>
         </div>
         <div class="field">
             <div class="ui radio checkbox entity-type-radio" id="organization_type">
-                <input type="radio" name="relation_type" value="organization" {{ (type == 'organization') ? 'checked="checked"' : '' }}>
+                <input type="radio" name="type" value="organization" {{ (type == 'organization') ? 'checked="checked"' : '' }}>
                 <label>{{ fields.organization.label }}</label>
             </div>  
         </div>                

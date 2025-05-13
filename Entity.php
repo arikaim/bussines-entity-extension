@@ -36,9 +36,7 @@ class Entity extends Extension
         $this->registerContentTypeAction('entity','Classes\\ImportFromPayPalCheckout');  
         // Relations map 
         $this->addRelationsMap([
-            'entity'       => 'Entity',
-            'person'       => 'Person',
-            'organization' => 'Organization'
+            'entity' => 'Entity'
         ]);
         // Ssevice
         $this->registerService('EntityService');        
@@ -47,9 +45,7 @@ class Entity extends Extension
     public function dbInstall(): void
     {  
         // Create db tables
-        $this->createDbTable('Entity');     
-        $this->createDbTable('Person');   
-        $this->createDbTable('Organization');  
+        $this->createDbTable('Entity');           
         $this->createDbTable('EntityAddress');     
     }
 

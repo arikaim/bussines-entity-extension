@@ -2,7 +2,7 @@
 {% if uuid is not empty %}
     {% set entity = createModel('Entity','entity').findById(uuid) %}
 {% endif %}
-{% set type = entity.type|default('person') %}
+{% set type = entity.relation_type|default('person') %}
 <form class="ui form {{ class }}" id="entity_form">  
     {% if uuid is not empty %}
         <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">  
@@ -31,6 +31,7 @@
     </div>       
     {% else %}
         <div class="field">
+            <input type="hidden" name="relation_type" value="{{ type }}" >           
             <div class="ui basic label">
                 {{ (type == 'person') ? fields.person.label : fields.organization.label }}
             </div>
@@ -41,6 +42,5 @@
             {% endfor %}     
         </div>
     {% endif %}
-    
     {{ component('semantic~form.footer') }}   
 </form>

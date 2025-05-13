@@ -34,13 +34,14 @@ function EntityView() {
         arikaim.ui.button('.delete-entity',function(element) {
             var uuid = $(element).attr('uuid');
             var title = $(element).attr('data-title');
+
             var message = arikaim.ui.template.render(self.getMessage('remove.content'),{ title: title });
 
             modal.confirmDelete({ 
                 title: self.getMessage('remove.title'),
                 description: message
             },function() {
-                entityApi.delete(uuid,function(result) {
+                entityApi.delete(uuid,function(result) {                   
                     $('#row_' + uuid).remove();                
                 });
             });
@@ -48,11 +49,13 @@ function EntityView() {
     };
 
     this.init = function() {
-        this.loadMessages('entity::admin.customers');
+        this.loadMessages('entity::admin.messages');
         
         arikaim.ui.loadComponentButton('.add-entity');
         
         arikaim.events.on('entity.create',function(uuid) {
+            $('#empty_row').remove();
+            
             arikaim.ui.loadComponent({
                 mountTo: 'items_list',
                 append: true,

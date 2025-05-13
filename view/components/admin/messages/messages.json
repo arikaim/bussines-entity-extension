@@ -7,5 +7,9 @@
         "update": "Can't update entity.",      
         "delete": "Can't delete entity",
         "id": "Not valid entity Id."       
+    },
+    "remove" : {
+        "title": "Confirm Delete",
+        "content": "Confirm delete entity."
     }
 }

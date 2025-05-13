@@ -6,7 +6,7 @@
     "description": "Add, edit, import business entities.",
     "short-description": "Add, edit, import business entities.",   
     "repository": "https://github.com/arikaim/bussines-entity-extension.git",
-    "version": "1.1.15",
+    "version": "1.1.16",
     "position": "2",
     "require": {
         "extensions": [

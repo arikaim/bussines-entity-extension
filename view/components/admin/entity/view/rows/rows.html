@@ -4,16 +4,13 @@
     .orderBy('name')
 %}  
 
-role {{ role }}
 {% set items = paginate(entity,'entity') %}
 {% set items = items.getItems() %}
 
 {% if items|length == 0 %}
-<div>
-    <tr>
+    <tr id="empty_row">
         <td colspan="5">..</td>
     </tr>
-</div>
 {% endif %}
 
 {% for item in items %}

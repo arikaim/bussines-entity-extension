@@ -63,6 +63,8 @@ function EntityView() {
                     uuid: uuid
                 },
                 component: 'entity::admin.entity.view.item'
+            },function() {
+                self.initRows();
             }) 
         },'onEntityCreate');
 
@@ -76,7 +78,7 @@ function EntityView() {
                 component: 'entity::admin.entity.view.item'
             },function() {
                 self.initRows();
-            }) 
+            });
         },'onEntityUpdate');
 
         var role = $('#items_list').attr('role').trim();

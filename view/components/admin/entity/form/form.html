@@ -2,6 +2,7 @@
 {% if uuid is not empty %}
     {% set entity = createModel('Entity','entity').findById(uuid) %}
 {% endif %}
+{% set type = entity.type|default('organization') %}
 
 <form class="ui form {{ class }}" id="entity_form">  
     {% if uuid is not empty %}
@@ -17,13 +18,23 @@
     <div class="inline fields">
         <div class="field">
             <div class="ui radio checkbox entity-type-radio" id="person_type">
-                <input rule="empty" type="radio" name="type" {{ (entity.type == 'person') ? 'checked="checked"' : '' }} value="person">
+                <input 
+                    rule="empty" 
+                    type="radio" 
+                    name="type" 
+                    {{ (type == 'person') ? 'checked="checked"' : '' }} 
+                    value="person">
                 <label>{{ fields.person.label }}</label>
             </div>
         </div>
         <div class="field">
             <div class="ui radio checkbox entity-type-radio" id="organization_type">
-                <input rule="empty" type="radio" name="type" value="organization" {{ (entity.type == 'organization') ? 'checked="checked"' : '' }}>
+                <input 
+                    rule="empty" 
+                    type="radio" 
+                    name="type" 
+                    value="organization" 
+                    {{ (type == 'organization') ? 'checked="checked"' : '' }}>
                 <label>{{ fields.organization.label }}</label>
             </div>  
         </div>                

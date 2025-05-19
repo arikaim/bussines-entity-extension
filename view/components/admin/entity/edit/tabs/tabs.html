@@ -15,6 +15,14 @@
         type="{{ address_type }}">
         <i class="address card outline icon blue"></i>
         {{ (address_type == 'home') ? labels.address.home : labels.address.business }}     
+    </div> 
+    <div 
+        class="item link edit-entity-tab-item" 
+        component="entity::admin.entity.edit.address" 
+        uuid="{{ uuid }}" 
+        type="shipping">
+        <i class="address card outline icon blue"></i>
+        {{ labels.address.shipping }}     
     </div>    
 </div>
 <div class="ui active tab basic segment" id="entity_edit_content">      

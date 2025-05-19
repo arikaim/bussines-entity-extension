@@ -31,7 +31,7 @@ class EntityApi extends ApiController
      */
     public function init()
     {
-        $this->loadMessages('entity::messages');
+        $this->loadMessages('current>entity.messages');
         $this->setExtensionName('entity');
         $this->setModelClass('Entity');
 
@@ -68,7 +68,7 @@ class EntityApi extends ApiController
 
         $this->setResponse(($result !== false),function() use($entity) {            
             $this
-                ->message('delete')
+                ->message('delete','Deleted successfully')
                 ->field('uuid',$entity->uuid);  
         },'errors.delete');
     }

@@ -3,6 +3,7 @@
         "details": "Details",
         "address": {
             "home": "Home Address",
+            "shipping": "Shipping Address",
             "business": "Business Address"     
         }
              

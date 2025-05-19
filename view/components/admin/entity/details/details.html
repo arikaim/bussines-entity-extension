@@ -42,13 +42,17 @@
             <tr>
                 <td class="right aligned">{{ labels.address }}</td>
                 <td>
-                    {% for item in entity.addresses %}            
+                    {% for item in entity.addresses %}     
+                        <h4 class="font-bold uppercase">
+                            {{ item.address_type }}
+                        </h4>                                          
                         {{  component('content::item',{ 
                                 content_type: 'address', 
                                 content_id: item.address.uuid, 
-                                close_button: false 
+                                close_button: false,
+                                hide_title: true
                             }) 
-                        }}                        
+                        }}                                                               
                     {% endfor %}
                 </td>
             </tr>

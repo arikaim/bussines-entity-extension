@@ -42,7 +42,8 @@ function EntityView() {
                 description: message
             },function() {
                 entityApi.delete(uuid,function(result) {                   
-                    $('#row_' + uuid).remove();                
+                    $('#row_' + uuid).remove();  
+                    arikaim.page.toastMessage(result.message);            
                 });
             });
         });     
@@ -58,7 +59,7 @@ function EntityView() {
             
             arikaim.ui.loadComponent({
                 mountTo: 'items_list',
-                append: true,
+                prepend: true,
                 params: {
                     uuid: uuid
                 },

@@ -82,6 +82,15 @@ class Entity extends Model
     }
 
     /**
+     * Get address
+     * @param string $type
+     */
+    public function getAddress(string $type): ?object
+    {
+        return $this->addresses()->where('address_type',$type)->first();
+    }
+
+    /**
      * Delete entity
      *
      * @param integer|null $id

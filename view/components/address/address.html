@@ -1,0 +1,9 @@
+{% if uuid is not empty %}
+    {% set entity = createModel('Entity','entity').findById(uuid) %}
+{% endif %}
+{% set address = entity.getAddress('business') %}
+
+{{  component('address::address',{ 
+        address: address.address
+    }) 
+}}     

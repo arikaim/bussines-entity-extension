@@ -1,5 +1,6 @@
 {
     "labels": {
-        "hint": "Create New"
+        "new": "Create New",
+        "edit": "Edit"
     }
 }

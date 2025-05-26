@@ -1,19 +1,20 @@
-<div class="ui action input {{ class }}">   
+<div class="flex flex-rows items-center {{ class }}">   
     <a 
         {{ button.id|attr('id') }} 
         role="{{ role|default('customer') }}"
         content-id="{{ content_id|default('new_entity_content') }}"
-        class="ui icon button new-entity-button {{ button.class|default('green') }}" 
+        class="ui tiny icon button new-entity-button {{ button.class|default('green') }}" 
         title="{{ labels.new }}">
         <i class="icon plus {{ button.icon }}"></i>
     </a>
     {{  component('entity::dropdown',{ 
             role: role, 
+            rule: rule,
             selected: entity_id,
             component_id: dropdown_id,
             data_field: data_field,
             name: field_name,
-            class: 'fluid' 
+            class: 'fluid mini' 
         }) 
     }}
     <a 
@@ -21,7 +22,7 @@
         role="{{ role|default('customer') }}"    
         dropdown-id="{{ dropdown_id }}"   
         content-id="{{ content_id|default('new_entity_content') }}"
-        class="ui icon button edit-entity-button {{ button.class|default('green') }}" 
+        class="ui tiny icon button edit-entity-button {{ button.class|default('green') }}" 
         title="{{ labels.edit }}">
         <i class="icon edit {{ button.icon }}"></i>
     </a>

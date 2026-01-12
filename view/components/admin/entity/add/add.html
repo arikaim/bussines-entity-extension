@@ -1,5 +1,6 @@
-{% component 'semantic~panel' %}
+{% component 'system:admin.panel' %}
     {% set title = roles[role]|default(title) %}    
+    
     <div class="mt-4 {{ class|default('w-full') }}">
         {{  component('entity::admin.entity.form',{ 
                 type_edit: true, 

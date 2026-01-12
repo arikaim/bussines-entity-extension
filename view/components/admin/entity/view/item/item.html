@@ -14,12 +14,14 @@
             uuid="{{ item.uuid }}">
             <i class="icon edit"></i>
         </button>
-        <button class="ui icon basic mini button delete-entity" uuid="{{ item.uuid }}" data-title="{{ item.title }}">
+        <button 
+            class="ui icon basic mini button delete-entity" 
+            uuid="{{ item.uuid }}" data-title="{{ item.title }}">
             <i class="icon trash orange"></i>
         </button>                        
     </td>
     <td>
-        {{  component('semantic~status.dropdown',{ 
+        {{  component('system:admin.status.dropdown',{ 
                 status: item.status, 
                 uuid: item.uuid, 
                 skip: [2,3,4,5,6] 
@@ -29,11 +31,11 @@
     <td>{{ item.date_created|dateFormat }}</td>
     <td>{{ item.name }}</td>
     <td>
-        <div class="ui basic blue mini label">
+        <div class="badge badge-sm badge-outline">
             {{ item.type }}
         </div>   
         {% for role in item.roles %}
-        <div class="ui basic mini label">
+        <div class="badge badge-sm badge-outline">
             {{ role }}
         </div>
         {% endfor %}        

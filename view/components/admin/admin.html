@@ -1,31 +1,33 @@
-{{  component('semantic~tabs',{ 
+{{  component('system:admin.tabs',{ 
         items: [  
             { 
-                id: 'customers_button', 
                 title: labels.customers, 
                 component: 'entity::admin.entity', 
-                params: { role: 'customer' },
-                icon: 'users', 
+                params: 'role:customer',
+                svg_icon: 'icons~info', 
                 active: true 
             },
-            { 
-                id: 'suppliers_button', 
+            {               
                 title: labels.suppliers, 
                 component: 'entity::admin.entity', 
-                params: { role: 'supplier' },
-                icon: 'truck' 
+                params: 'role:supplier',
+                svg_icon: 'icons~info' 
             },
-            { 
-                id: 'sellers_button', 
+            {               
                 title: labels.sellers, 
                 component: 'entity::admin.entity', 
-                params: { role: 'seller' },
-                icon: 'store alternate' }
+                params: 'role:seller',
+                svg_icon: 'icons~info' 
+            }
         ],
-        menu: { extension: 'entity' },
+        menu: { 
+            extension: 'entity' 
+        },
         content: { 
             component: 'entity::admin.entity',
-            params: { role: 'customer' }
+            params: { 
+                role: 'customer' 
+            }
         } 
     })
 }}

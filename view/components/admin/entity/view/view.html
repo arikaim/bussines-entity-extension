@@ -1,33 +1,26 @@
-<div class="ui segment">
-    <div class="ui stackable grid">
-        <div class="four wide column">                 
-            <button 
-                mountTo="details_content"
-                component="entity::admin.entity.add"
-                params="role:{{ role }}"
-                title="{{ tooltip.add }}"
-                class="ui mini curcular green icon button add-entity">
-                <i class="icon plus"></i>
-            </button>    
-        </div>        
-        <div class='ten wide column'>
-            {{ component('semantic~search.form',{ namespace: 'entity.' ~ role }) }}
-        </div>        
-        <div class="two wide column right aligned">       
-            {{ component('semantic~paginator.dropdown',{ namespace: 'entity.' ~ role }) }}
-        </div>
-    </div>
+<div class="{{ theme.panel }} flex flex-row items-center">             
+    <button 
+        mountTo="details_content"
+        component="entity::admin.entity.add"
+        params="role:{{ role }}"
+        title="{{ tooltip.add }}"
+        class="{{ theme.buttons.green }} add-entity">
+        {{ buttons.create }}
+    </button>          
+    <div class='ml-4 w-1/3'>
+        {{ component('system:admin.search.form',{ namespace: 'entity.' ~ role }) }}
+    </div>            
 </div>
-<div class="ui segment w-full">
+<div class="mt-4 {{ theme.panel }}">
     <table class="ui compact stackable borderless basic table">
         <thead>
-            <tr class="table-head">                          
-                <th class="two wide">{{ columns.action }}</th>
-                <th class="two wide">{{ columns.status }}</th>
-                <th class="collapsing two wide">{{ columns.date }}</th>
+            <tr>                          
+                <th class="w-32">{{ columns.action }}</th>
+                <th class="2-32">{{ columns.status }}</th>
+                <th class="">{{ columns.date }}</th>
                 <th>{{ columns.name }}</th>                     
-                <th class="three wide">{{ columns.type }}</th>
-                <th class="four wide">{{ columns.user }}</th>
+                <th class="">{{ columns.type }}</th>
+                <th class="">{{ columns.user }}</th>
             </tr>
         </thead>
         <tbody 
@@ -38,7 +31,6 @@
             {{ component('entity::admin.entity.view.rows',{ role: role }) }}   
         </tbody>  
     </table>
-    <div class="mt-2" id="paginator">
-        {{ component('semantic~paginator',{ namespace: 'entity.' ~ role }) }}
+    <div class="mt-2 ml-2" id="paginator">        
     </div>
 </div>   

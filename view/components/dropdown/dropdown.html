@@ -11,6 +11,7 @@
 {% set data_field = data_field|default('uuid') %}
 {% set selected_text = (selected is empty) ? labels.select : selected.name %}
 {% set name = name|default('entity_id') %}
+
 <div class="ui search selection dropdown entity-dropdown {{ class }}" 
     {{ title|attr('title') }} 
     data-field="{{ data_field }}"

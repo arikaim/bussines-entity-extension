@@ -4,19 +4,19 @@
 {% endif %}
 {% set type = entity.type|default('organization') %}
 
-<form class="ui form {{ class }}" id="entity_form">  
+<form class="form {{ class }}" id="entity_form">  
     {% if uuid is not empty %}
         <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">  
     {% endif %}   
     {% if role is not empty %}
         <input type="hidden" name="role" id="role" value="{{ role }}">  
     {% endif %}   
-    <div class="field required">
+    <div class="{{ theme.form.filed }} required">
         <label>{{ fields.name.label }}</label>
         <input role="empty" type="text" name="name" id="name" {{ fields.name.placeholder|attr('placeholder') }} value="{{ entity.name }}">  
     </div>    
     <div class="inline fields">
-        <div class="field">
+        <div class="{{ theme.form.filed }}">
             <div class="ui radio checkbox entity-type-radio" id="person_type">
                 <input 
                     rule="empty" 
@@ -27,7 +27,7 @@
                 <label>{{ fields.person.label }}</label>
             </div>
         </div>
-        <div class="field">
+        <div class="{{ theme.form.filed }}">
             <div class="ui radio checkbox entity-type-radio" id="organization_type">
                 <input 
                     rule="empty" 
@@ -40,14 +40,14 @@
         </div>                
     </div>     
     {% if role is not empty %}
-    <div class="ui basic label">
+    <div class="badge badge-sm badge-outline">
         {{ role }}
     </div>
     {% endif %}  
     {% for role in entity.roles %}
-    <div class="ui basic label">
+    <div class="badge badge-sm badge-outline">
         {{ role }}
     </div>
     {% endfor %}  
-    {{ component('semantic~form.footer') }}   
+    {{ component('system:form.footer') }}   
 </form>

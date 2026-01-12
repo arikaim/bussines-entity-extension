@@ -3,6 +3,9 @@
         "content": "View",
         "icon": "list"              
     },
+    "buttons": {
+        "create": "Create"
+    },
     "columns": {
         "action": "Action",
         "status": "Status",

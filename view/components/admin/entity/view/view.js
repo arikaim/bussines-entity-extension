@@ -24,11 +24,11 @@ function EntityView() {
             }); 
         });
 
-        $('.status-dropdown').dropdown({
-            onChange: function(value) {
-                var uuid = $(this).attr('uuid');
-                entityApi.setStatus(uuid,value);               
-            }
+        $('.status-dropdown').on('change', function() {
+            var value = $().val();
+            var uuid = $(this).attr('uuid');
+
+            entityApi.setStatus(uuid,value);               
         });
 
         arikaim.ui.button('.delete-entity',function(element) {
@@ -85,13 +85,6 @@ function EntityView() {
         var role = $('#items_list').attr('role').trim();
         var namespace = 'entity.' + role;
 
-        paginator.init('items_list',{
-            name: 'entity::admin.entity.view.rows',
-            params: {
-                namespace: namespace
-            }
-        }); 
-
         search.init({
             id: 'items_list',
             component: 'entity::admin.entity.view.rows',
@@ -99,7 +92,7 @@ function EntityView() {
         },namespace);
         
         arikaim.events.on('entity.search.load',function(result) {      
-            paginator.reload();
+            //paginator.reload();
             self.initRows();    
         },'entitySearch');   
 

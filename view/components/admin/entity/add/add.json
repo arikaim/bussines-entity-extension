@@ -1,5 +1,5 @@
 {   
-    "icon": "plus",
+    "icon": "icons~plus",
     "title": "Add Entity",
     "roles": {
         "customer": "Add customer",

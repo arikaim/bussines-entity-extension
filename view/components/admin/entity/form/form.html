@@ -12,35 +12,50 @@
         <input type="hidden" name="role" id="role" value="{{ role }}">  
     {% endif %}   
     <div class="{{ theme.form.filed }} required">
-        <label>{{ fields.name.label }}</label>
-        <input role="empty" type="text" name="name" id="name" {{ fields.name.placeholder|attr('placeholder') }} value="{{ entity.name }}">  
+        <label class="{{ theme.form.label }}">
+            {{ fields.name.label }}
+        </label>
+        <input 
+            class="{{ theme.form.input }}"
+            role="empty" 
+            type="text" 
+            name="name" 
+            id="name" 
+            {{ fields.name.placeholder|attr('placeholder') }} 
+            value="{{ entity.name }}">  
     </div>    
-    <div class="inline fields">
+    <div class="mt-4">
         <div class="{{ theme.form.filed }}">
-            <div class="ui radio checkbox entity-type-radio" id="person_type">
+            <div class="{{ theme.form.space }} entity-type-radio" id="person_type">
                 <input 
+                    class="{{ theme.form.radio }}"
                     rule="empty" 
                     type="radio" 
                     name="type" 
                     {{ (type == 'person') ? 'checked="checked"' : '' }} 
                     value="person">
-                <label>{{ fields.person.label }}</label>
+                <label class="{{ theme.form.label }}">
+                    {{ fields.person.label }}
+                </label>
             </div>
         </div>
         <div class="{{ theme.form.filed }}">
-            <div class="ui radio checkbox entity-type-radio" id="organization_type">
+            <div class="{{ theme.form.space }} entity-type-radio" id="organization_type">
                 <input 
+                    class="{{ theme.form.radio }}"
                     rule="empty" 
                     type="radio" 
                     name="type" 
                     value="organization" 
                     {{ (type == 'organization') ? 'checked="checked"' : '' }}>
-                <label>{{ fields.organization.label }}</label>
+                <label class="{{ theme.form.label }}">
+                    {{ fields.organization.label }}
+                </label>
             </div>  
         </div>                
     </div>     
     {% if role is not empty %}
-    <div class="badge badge-sm badge-outline">
+    <div class="mt-4 badge badge-sm badge-outline">
         {{ role }}
     </div>
     {% endif %}  
@@ -49,5 +64,6 @@
         {{ role }}
     </div>
     {% endfor %}  
+
     {{ component('system:form.footer') }}   
 </form>

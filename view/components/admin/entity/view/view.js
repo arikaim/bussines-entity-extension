@@ -6,24 +6,6 @@ function EntityView() {
     this.initRows = function() {
         arikaim.ui.loadComponentButton('.entity-action');
 
-        arikaim.ui.button('.edit-entity',function(element) {
-            arikaim.page.loadContent({
-                id: 'details_content',
-                component: 'entity::admin.entity.edit',
-                params: { uuid: $(element).attr('uuid') }
-            }); 
-        });
-        
-        arikaim.ui.button('.entity-details',function(element) {
-            var uuid = $(element).attr('uuid');
-
-            arikaim.page.loadContent({
-                id: 'details_content',
-                component: 'entity::admin.entity.details',
-                params: { uuid: uuid }
-            }); 
-        });
-
         $('.status-dropdown').on('change', function() {
             var value = $().val();
             var uuid = $(this).attr('uuid');
@@ -34,18 +16,14 @@ function EntityView() {
         arikaim.ui.button('.delete-entity',function(element) {
             var uuid = $(element).attr('uuid');
             var title = $(element).attr('data-title');
-
             var message = arikaim.ui.template.render(self.getMessage('remove.content'),{ title: title });
 
-            modal.confirmDelete({ 
-                title: self.getMessage('remove.title'),
-                description: message
-            },function() {
+            arikaim.ui.getComponent('confirm_delete').open(function() {
                 entityApi.delete(uuid,function(result) {                   
-                    $('#row_' + uuid).remove();  
-                    arikaim.page.toastMessage(result.message);            
+                    $('#row_' + uuid).remove(); 
+                    arikaim.ui.getComponent('toast').show(result.message);                    
                 });
-            });
+            },message);          
         });     
     };
 
@@ -92,7 +70,7 @@ function EntityView() {
         },namespace);
         
         arikaim.events.on('entity.search.load',function(result) {      
-            //paginator.reload();
+            arikaim.ui.getComponent('entity_paginator').reload(); 
             self.initRows();    
         },'entitySearch');   
 

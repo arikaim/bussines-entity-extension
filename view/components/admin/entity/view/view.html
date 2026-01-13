@@ -1,6 +1,6 @@
 <div class="{{ theme.panel }} flex flex-row items-center">             
     <button 
-        mountTo="details_content"
+        mountTo="entity_details"
         component="entity::admin.entity.add"
         params="role:{{ role }}"
         title="{{ tooltip.add }}"
@@ -12,11 +12,11 @@
     </div>            
 </div>
 <div class="mt-4 {{ theme.panel }}">
-    <table class="ui compact stackable borderless basic table">
+    <table class="{{ theme.table.default }}">
         <thead>
             <tr>                          
                 <th class="w-32">{{ columns.action }}</th>
-                <th class="2-32">{{ columns.status }}</th>
+                <th class="w-32">{{ columns.status }}</th>
                 <th class="">{{ columns.date }}</th>
                 <th>{{ columns.name }}</th>                     
                 <th class="">{{ columns.type }}</th>
@@ -24,13 +24,21 @@
             </tr>
         </thead>
         <tbody 
-            id="items_list" 
-            component="entity::admin.entity.view.rows" 
-            namespace="entity" 
+            id="items_list"
             role="{{ role }}">
             {{ component('entity::admin.entity.view.rows',{ role: role }) }}   
         </tbody>  
     </table>
-    <div class="mt-2 ml-2" id="paginator">        
+    <div class="mt-2 ml-2" id="paginator">  
+        {{  component("system:admin.paginator",{ 
+                id: 'entity_paginator',
+                namespace: 'entity',
+                rows_selector: 'items_list',
+                params: {
+                    role: role
+                },
+                component:"entity::admin.entity.view.rows" 
+            })  
+        }}         
     </div>
 </div>   

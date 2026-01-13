@@ -8,8 +8,10 @@
         "delete": "Can't delete entity",
         "id": "Not valid entity Id."       
     },
-    "remove" : {
-        "title": "Confirm Delete",
-        "content": "Confirm delete entity."
+    "messages": {
+        "remove" : {
+            "title": "Confirm Delete",
+            "content": "Confirm delete entity '<b><% title %></b>' ."
+        }
     }
 }

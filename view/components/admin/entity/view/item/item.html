@@ -5,19 +5,24 @@
 <tr id="row_{{ item.uuid }}">        
     <td>         
         <button 
-            class="ui icon mini basic button entity-details" 
-            uuid="{{ item.uuid }}">
-            <i class="icon info"></i>
+            mountTo="entity_details"
+            component="entity::admin.entity.details"
+            params="uuid:{{ item.uuid }}"
+            class="{{ theme.buttons.icon }} entity-action">
+            {{ component('icons~info',theme.icons.menu,'svg') }}
         </button>   
         <button 
-            class="ui icon mini basic button edit-entity" 
-            uuid="{{ item.uuid }}">
-            <i class="icon edit"></i>
+            mountTo="entity_details"
+            component="entity::admin.entity.edit"
+            params="uuid:{{ item.uuid }}"
+            class="{{ theme.buttons.icon }} entity-action">
+            {{ component('icons~edit',theme.icons.menu,'svg') }}
         </button>
         <button 
-            class="ui icon basic mini button delete-entity" 
-            uuid="{{ item.uuid }}" data-title="{{ item.title }}">
-            <i class="icon trash orange"></i>
+            class="{{ theme.buttons.icon }} delete-entity" 
+            uuid="{{ item.uuid }}" 
+            data-title="{{ item.name }}">
+            {{ component('icons~trash',theme.icons.delete,'svg') }}
         </button>                        
     </td>
     <td>
@@ -31,8 +36,8 @@
     <td>{{ item.date_created|dateFormat }}</td>
     <td>{{ item.name }}</td>
     <td>
-        <div class="badge badge-sm badge-outline">
-            {{ item.type }}
+        <div class="badge badge-sm badge-outline badge-info">
+            <span class="text-gray-800">{{ item.type }}</span>           
         </div>   
         {% for role in item.roles %}
         <div class="badge badge-sm badge-outline">

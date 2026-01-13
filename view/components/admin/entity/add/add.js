@@ -3,9 +3,8 @@
 arikaim.component.onLoaded(function() { 
     arikaim.ui.form.onSubmit("#entity_form",function() {  
         return entityApi.add('#entity_form');
-    },function(result) {     
-        arikaim.page.toastMessage(result.message);
-
+    },function(result) {    
+        arikaim.ui.getComponent('toast').show(result.message);
         arikaim.events.emit('entity.create',result.uuid);
 
         arikaim.page.loadContent({

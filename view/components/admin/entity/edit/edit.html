@@ -1,8 +1,6 @@
-{% component 'semantic~panel' %}    
-    <div class="mt-1" 
-        id="edit_entity_content">
-        {% if uuid is not empty %}
-            {{ component('entity::admin.entity.edit.tabs',{ uuid: uuid }) }}            
-        {% endif %}
+{% component 'system:admin.panel' %}    
+    <div class="mt-2" 
+        id="edit_entity_content">        
+        {{ component('entity::admin.entity.edit.tabs',{ uuid: uuid }) }}                    
     </div>   
 {% endcomponent %}

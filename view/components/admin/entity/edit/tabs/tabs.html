@@ -1,30 +1,38 @@
 {% set entity = createModel('Entity','entity').findById(uuid) %}
 {% set address_type = (entity.is_person) ? 'home' : 'business' %}
-<div class="ui stackable tabular menu entity-edit-tabs">      
-    <div 
-        class="item link active edit-entity-tab-item" 
-        component="entity::admin.entity.form" 
-        uuid="{{ uuid }}">
-        <i class="icon stream blue"></i>
-        {{ labels.details }}     
-    </div>  
-    <div 
-        class="item link edit-entity-tab-item" 
-        component="entity::admin.entity.edit.address" 
-        uuid="{{ uuid }}" 
-        type="{{ address_type }}">
-        <i class="address card outline icon blue"></i>
-        {{ (address_type == 'home') ? labels.address.home : labels.address.business }}     
-    </div> 
-    <div 
-        class="item link edit-entity-tab-item" 
-        component="entity::admin.entity.edit.address" 
-        uuid="{{ uuid }}" 
-        type="shipping">
-        <i class="address card outline icon blue"></i>
-        {{ labels.address.shipping }}     
-    </div>    
-</div>
-<div class="ui active tab basic segment" id="entity_edit_content">      
-    {{ component('entity::admin.entity.edit.details',{ uuid: uuid }) }}       
+
+{{  component('system:admin.tabs',{ 
+        id: 'edit_entity_tab',
+        items: [  
+            { 
+                title: labels.details, 
+                component: 'entity::admin.entity.edit.details', 
+                params: 'uuid:' ~ uuid,
+                svg_icon: 'icons~info', 
+                active: true 
+            },
+            {               
+                title: (address_type == 'home') ? labels.address.home : labels.address.business, 
+                component: 'entity::admin.entity.edit.address', 
+                params: 'type: ' ~ address_type ~ ',' ~ 'uuid:' ~ uuid,
+                svg_icon: 'icons~address' 
+            },
+            {               
+                title: labels.address.shipping , 
+                component: 'entity::admin.entity.edit.address', 
+                params: 'type:shipping,uuid:' ~ uuid,
+                svg_icon: 'icons~address' 
+            }
+        ],
+        content: { 
+            id: 'entity_edit_content',
+            component: 'entity::admin.entity.edit.details',
+            params: { 
+                uuid: uuid
+            }
+        } 
+    })
+}}
+
+<div class="mt-2" id="entity_edit_content">      
 </div>     

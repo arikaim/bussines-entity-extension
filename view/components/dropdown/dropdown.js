@@ -7,6 +7,7 @@ arikaim.component.onLoaded(function(component) {
         var role = component.get('role').trim();
         var user = component.get('user').trim();
 
+        /*
         $('#' + component.getId()).dropdown({
             apiSettings: {     
                 on: 'now',      
@@ -18,6 +19,7 @@ arikaim.component.onLoaded(function(component) {
             },
             filterRemoteData: false                
         }); 
+        */
     }
     
     component.init();

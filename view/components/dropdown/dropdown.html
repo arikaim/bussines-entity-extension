@@ -1,34 +1,18 @@
-{% set size = size|default(25) %}
-{% set model = createModel('Entity','entity') %}
-{% set entity = (role is not empty) ? model.queryByRole(role) : model %}   
-{% if user_id is not empty %}
-    {% set entity = entity.userQuery(user_id) %}
-{% endif %} 
-{% if selected is not empty %}
-    {% set selected = model.findById(selected) %}
+{% if user_id is empty %}
+    {% set user_id = service('access').getId() %}
 {% endif %}
-{% set items = entity.take(size).get() %}
-{% set data_field = data_field|default('uuid') %}
-{% set selected_text = (selected is empty) ? labels.select : selected.name %}
-{% set name = name|default('entity_id') %}
+{% set data_field = data_field|default('id') %}
 
-<div class="ui search selection dropdown entity-dropdown {{ class }}" 
-    {{ title|attr('title') }} 
-    data-field="{{ data_field }}"
-    user="{{ user_id|default('null') }}"
-    selected="{{ selected[data_field] }}"
-    role="{{ role|default('all') }}"
-    id="{{ component_id }}">    
-    <input {{ rule|attr('rule') }} name="{{ name }}" type="hidden" value="{{ selected[data_field] }}">  
-    <div class="text">
-        {{ selected_text }}
-    </div>  
-    <i class="icon dropdown"></i>
-    <div class="menu">        
-        {% for item in items %}      
-        <div class="item" data-value="{{ item[data_field] }}">  
-            {{ item.name }}
-        </div>   
-        {% endfor %}          
-    </div>
-</div>
+{{  component('system:form.fields.select',{
+        id: id|default('entity_select'),
+        name: field_name|default('entity_id'),
+        rule: rule,
+        class: class,
+        size: size,
+        button_class: button_class,
+        apiUrl: DOMAIN ~ BASE_PATH ~ '/api/entity/list/' ~ data_field ~ '/' ~ user_id ~ '/' ~ role ~ '/',
+        clear_button: true,                     
+        selected: selected,
+        placeholder: labels.select
+    }) 
+}} 

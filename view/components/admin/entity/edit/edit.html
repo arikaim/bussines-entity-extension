@@ -1,4 +1,5 @@
-{% component 'system:admin.panel' %}    
+{% component 'system:admin.panel' %}  
+    {% set id = 'entity_edit_panel' %}
     <div class="mt-2" 
         id="edit_entity_content">        
         {{ component('entity::admin.entity.edit.tabs',{ uuid: uuid }) }}                    

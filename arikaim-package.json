@@ -20,7 +20,6 @@
         "title": "Entity",
         "svg_icon": "icons~info",
         "page-title": "Bussines Enitites",
-        "page-icon": "icons~info",
         "component": "entity::admin"
     }
 }

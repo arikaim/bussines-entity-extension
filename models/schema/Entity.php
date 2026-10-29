@@ -39,6 +39,7 @@ class Entity extends Schema
         $table->string('type')->nullable(false);
         $table->boolean('customer')->nullable(true);    
         $table->boolean('supplier')->nullable(true);       
+        $table->boolean('shipping')->nullable(true);       
         $table->boolean('vendor')->nullable(true);    
         $table->boolean('employee')->nullable(true);       
         $table->boolean('seller')->nullable(true);         
@@ -67,6 +68,10 @@ class Entity extends Schema
         
         if ($this->hasColumn('age') == false) {
             $table->integer('age')->nullable(true);
+        } 
+
+        if ($this->hasColumn('shipping') == false) {
+            $table->boolean('shipping')->nullable(true);       
         } 
     }
 }

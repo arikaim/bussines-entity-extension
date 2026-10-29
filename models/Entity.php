@@ -54,6 +54,7 @@ class Entity extends Model
         'user_id',
         'customer',
         'supplier',
+        'shipping',
         'vendor',
         'employee',
         'seller',
@@ -144,6 +145,10 @@ class Entity extends Model
             $roles[] = EntityInterface::ROLE_SELLER;
         }
         
+        if ($this->shipping == 1) {
+            $roles[] = EntityInterface::ROLE_SHIPPING;
+        }
+
         return $roles;
     }
 
@@ -170,12 +175,31 @@ class Entity extends Model
      */
     public function hasEntity(string $name, ?int $userId = null): bool
     {
-        $query = $this->where('name','=',$name);
-        if (empty($userId) == false) {
-            $query = $query->where('user_id','=',$userId);
-        }
+        return ($this->findEntity($name,$userId) !== null);       
+    }
 
-        return ($query->first() !== null);       
+    /**
+     * Find entity by name
+     * @param string $name
+     * @param mixed $userId
+     */
+    public function findEntity(string $name, ?int $userId = null): ?object
+    {
+        return $this->entityQuery($name,$userId)->first();
+    }
+
+    /**
+     * Entity query by name
+     * @param mixed $query
+     * @param string $name
+     * @param mixed $userId
+     */
+    public function scopeEntityQuery($query, string $name, ?int $userId = null)
+    {
+        $name = trim($name);
+        $query = $query->where('name','=',$name);
+
+        return (empty($user_id) == false) ? $query->userQuery($userId) : $query;           
     }
 
     /**

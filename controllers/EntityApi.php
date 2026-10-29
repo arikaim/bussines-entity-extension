@@ -14,6 +14,7 @@ use Arikaim\Core\Controllers\ApiController;
 
 use Arikaim\Core\Controllers\Traits\Status;
 use Arikaim\Core\Controllers\Traits\SoftDelete;
+use Arikaim\Extensions\Entity\Controllers\Traits\Entity;
 
 /**
  * Entity api controller
@@ -22,6 +23,7 @@ class EntityApi extends ApiController
 {
     use 
         Status,
+        Entity,
         SoftDelete;
 
     /**
@@ -45,7 +47,7 @@ class EntityApi extends ApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
+     * @param \Arikaim\Core\Validator\Validator $data
      * @return mixed
     */
     public function delete($request, $response, $data) 
@@ -78,7 +80,7 @@ class EntityApi extends ApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
+     * @param \Arikaim\Core\Validator\Validator $data
      * @return mixed
     */
     public function add($request, $response, $data) 
@@ -87,13 +89,8 @@ class EntityApi extends ApiController
             ->addRule('text:min=2|required','name')
             ->validate(true); 
 
-        $type = $data->get('type','person');
-        $name = $data->get('name',null);
-        $role = $data->get('role','customer');
-        $userId = (int)$data->get('user',$this->getUserId());
-        $userId = ($userId == 0) ? $this->getUserId() : $userId;
-
-        $entity = Model::Entity('entity')->createEntity($name,$type,$userId,$role);      
+        $entity = $this->addEntity($data);
+    
         if ($entity == null) {
             $this->error('errors.add','Error create entity');
             return false;
@@ -102,9 +99,9 @@ class EntityApi extends ApiController
         $this
             ->message('add','Added successfully.')
             ->field('uuid',$entity->uuid)
-            ->field('type',$type)
-            ->field('user',$userId)
-            ->field('role',$role);  
+            ->field('type',$entity->type)
+            ->field('user',$entity->userId)
+            ->field('role',$data['role']);  
     }
 
     /**
@@ -112,7 +109,7 @@ class EntityApi extends ApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
+     * @param \Arikaim\Core\Validator\Validator $data
      * @return mixed
     */
     public function update($request, $response, $data) 
@@ -146,7 +143,7 @@ class EntityApi extends ApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
+     * @param \Arikaim\Core\Validator\Validator $data
      * @return mixed
     */
     public function getList($request, $response, $data) 

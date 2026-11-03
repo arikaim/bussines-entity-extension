@@ -19,6 +19,7 @@ use Arikaim\Core\Db\Traits\DateCreated;
 use Arikaim\Core\Db\Traits\DateUpdated;
 use Arikaim\Core\Db\Traits\SoftDelete;
 use Arikaim\Core\Db\Traits\UserRelation;
+use Arikaim\Core\Db\Traits\Tree;
 
 use Arikaim\Extensions\Entity\Classes\EntityInterface;
 
@@ -29,6 +30,7 @@ class Entity extends Model
 {
     use Uuid,    
         Status,   
+        Tree,
         UserRelation,
         DateCreated,
         DateUpdated,
@@ -49,6 +51,7 @@ class Entity extends Model
      */
     protected $fillable = [
         'name',
+        'parent_id',
         'type',
         'status',
         'user_id',
@@ -197,7 +200,7 @@ class Entity extends Model
     public function scopeEntityQuery($query, string $name, ?int $userId = null)
     {
         $name = trim($name);
-        $query = $query->where('name','=',$name);
+        $query = $query->ignoreCase('name','=',$name);
 
         return (empty($user_id) == false) ? $query->userQuery($userId) : $query;           
     }
@@ -214,7 +217,7 @@ class Entity extends Model
     public function scopeQueryByRole($query, ?string $role, ?int $userId = null, ?string $name = null)
     {
         if (empty($name) == false) {
-            $query = $query->where('name','=',$name);
+            $query = $query->ignoreCase('name','=',$name);
         }
         if (empty($role) == false) {
             $query = $query->where($role,'=',1);

@@ -3,6 +3,7 @@
         "customers": "Customers",
         "suppliers": "Suppliers",
         "entity": "Enitites",
+        "shipping": "Shipping",
         "sellers": "Sellers"    
     }
 }

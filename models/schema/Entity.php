@@ -32,6 +32,7 @@ class Entity extends Schema
     public function create($table) 
     {            
         $table->id();
+        $table->parentId();
         $table->prototype('uuid');   
         $table->status();
         $table->userId();
@@ -62,6 +63,10 @@ class Entity extends Schema
      */
     public function update($table) 
     {       
+        if ($this->hasColumn('parent_id') == false) {
+            $table->parentId();
+        } 
+
         if ($this->hasColumn('note') == false) {
             $table->text('note')->nullable(true);    
         } 

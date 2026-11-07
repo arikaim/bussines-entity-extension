@@ -4,7 +4,10 @@
     .orderBy('name')
 %}  
 
-{% set items = paginate(entity,'entity') %}
+{{ createSearch('name','entity.' ~ role,'ilike:{value}%') }}
+{% set entity = applySearch(entity,'entity.' ~ role) %}
+
+{% set items = paginate(entity,'entity.' ~ role) %}
 {% set items = items.getItems() %}
 
 {% if items|length == 0 %}

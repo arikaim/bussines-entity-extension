@@ -1,0 +1,21 @@
+{% set entity = createModel('Entity','entity') %}
+{% set entity = entity
+    .queryByRole(role) 
+    .orderBy('name')
+%}  
+
+{{ createSearch('name','entity.' ~ role,'ilike:{value}%') }}
+{% set entity = applySearch(entity,'entity.' ~ role) %}
+
+{% set items = paginate(entity,'entity.' ~ role) %}
+{% set items = items.getItems() %}
+
+{% if items|length == 0 %}
+    <tr id="empty_row">
+        <td colspan="5">..</td>
+    </tr>
+{% endif %}
+
+{% for item in items %}
+    {{ component('entity::admin.entity.view.item',{ item: item }) }}
+{% endfor %}

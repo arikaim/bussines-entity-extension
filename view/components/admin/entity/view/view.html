@@ -32,7 +32,7 @@
     <div class="mt-2 ml-2" id="paginator">  
         {{  component("system:admin.paginator",{ 
                 id: 'entity_paginator',
-                namespace: 'entity',
+                namespace: 'entity.' ~ role,
                 rows_selector: 'items_list',
                 params: {
                     role: role

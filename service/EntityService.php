@@ -52,4 +52,18 @@ class EntityService extends Service implements ServiceInterface
     {
         return Model::Entity('entity')->findOrCreateSeller($name,$userId);
     }
+
+    public function saveAddress($entiyName, string $addressType, array $data): bool
+    {
+        $model = Model::Entity('entity');
+        $entity = (is_int($entiyName) == true) ? 
+            $model->findById($entiyName) : $model->findEntity($entiyName);
+
+        $address = $entity->address()->findOrCreate($addressType);
+        if ($address == null) {
+            return false;
+        }
+
+        return true;
+    }
 }

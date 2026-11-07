@@ -1,0 +1,44 @@
+<div class="{{ theme.panel }} flex flex-row items-center">             
+    <button 
+        mountTo="entity_details"
+        component="entity::admin.entity.add"
+        params="role:{{ role }}"
+        title="{{ tooltip.add }}"
+        class="{{ theme.buttons.green }} add-entity">
+        {{ buttons.create }}
+    </button>          
+    <div class='ml-4 w-1/3'>
+        {{ component('system:admin.search.form',{ namespace: 'entity.' ~ role }) }}
+    </div>            
+</div>
+<div class="mt-4 {{ theme.panel }}">
+    <table class="{{ theme.table.default }}">
+        <thead>
+            <tr>                          
+                <th class="w-32">{{ columns.action }}</th>
+                <th class="w-32">{{ columns.status }}</th>
+                <th class="">{{ columns.date }}</th>
+                <th>{{ columns.name }}</th>                     
+                <th class="">{{ columns.type }}</th>
+                <th class="">{{ columns.user }}</th>
+            </tr>
+        </thead>
+        <tbody 
+            id="items_list"
+            role="{{ role }}">
+            {{ component('entity::admin.entity.view.rows',{ role: role }) }}   
+        </tbody>  
+    </table>
+    <div class="mt-2 ml-2" id="paginator">  
+        {{  component("system:admin.paginator",{ 
+                id: 'entity_paginator',
+                namespace: 'entity.' ~ role,
+                rows_selector: 'items_list',
+                params: {
+                    role: role
+                },
+                component:"entity::admin.entity.view.rows" 
+            })  
+        }}         
+    </div>
+</div>   

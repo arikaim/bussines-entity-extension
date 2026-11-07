@@ -1,0 +1,17 @@
+{
+    "title": {
+        "content": "View",
+        "icon": "list"              
+    },
+    "buttons": {
+        "create": "Create"
+    },
+    "columns": {
+        "action": "Action",
+        "status": "Status",
+        "type": "Type",
+        "name": "Name",
+        "user": "User",
+        "date": "Date Created"       
+    }
+}

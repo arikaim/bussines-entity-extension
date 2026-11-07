@@ -1,0 +1,14 @@
+{% set branches = entity.childListQuery(entity.id) %}
+<h4 class="my-4 font-bold">
+    {{ title }}
+</h4>
+
+<div class="flex flex-row items-center">
+    <div class="mx-4 text-xs">
+        {{ labels.total }}
+    </div>
+    <div class="badge badge-xs badge-outline">
+        {{ branches.count() }}
+    </div>
+</div>
+

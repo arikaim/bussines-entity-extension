@@ -10,6 +10,8 @@
         "role": "Role",
         "address": "Address",
         "user": "User",
+        "ho": "Head Office",
+        "branch": "Branch",
         "type": "Type"
     }
 }

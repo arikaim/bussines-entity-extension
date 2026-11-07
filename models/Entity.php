@@ -200,7 +200,7 @@ class Entity extends Model
     public function scopeEntityQuery($query, string $name, ?int $userId = null)
     {
         $name = trim($name);
-        $query = $query->ignoreCase('name','=',$name);
+        $query = $query->ignoreCase('name',$name,'=');
 
         return (empty($user_id) == false) ? $query->userQuery($userId) : $query;           
     }
@@ -217,7 +217,7 @@ class Entity extends Model
     public function scopeQueryByRole($query, ?string $role, ?int $userId = null, ?string $name = null)
     {
         if (empty($name) == false) {
-            $query = $query->ignoreCase('name','=',$name);
+            $query = $query->ignoreCase('name',$name,'=');
         }
         if (empty($role) == false) {
             $query = $query->where($role,'=',1);
@@ -246,13 +246,21 @@ class Entity extends Model
      * @param string  $type
      * @param integer|null $userId
      * @param string  $role
+     * @param int|null $parentId
      * @return object|null
      */
-    public function findOrCreate(string $name, string $type, ?int $userId, string $role): ?object
+    public function findOrCreate(
+        string $name, 
+        string $type, 
+        ?int $userId, 
+        string $role,
+        ?int $parentId = null
+    ): ?object
     {
         $entity = $this->queryByRole($role,$userId,$name)->first();
 
-        return ($entity !== null) ? $entity : $this->createEntity($name,$type,$userId,$role);
+        return ($entity !== null) ? 
+            $entity : $this->createEntity($name,$type,$userId,$role,$parentId);
     }
 
     /**
@@ -274,20 +282,28 @@ class Entity extends Model
      * @param string $type
      * @param integer|null $userId
      * @param string|null $role
+     * @param int|null $parentId
      * @return Model|null
      */
-    public function createEntity(string $name, string $type, ?int $userId, ?string $role): ?object
+    public function createEntity(
+        string $name, 
+        string $type, 
+        ?int $userId, 
+        ?string $role,
+        ?int $parentId = null
+    ): ?object
     {
         if ($this->hasEntity($name,$userId) == true) {
             return null;
         }
 
         $data = \array_merge([
-            'name'    => $name,
-            'type'    => $type,            
-            'user_id' => $userId
+            'parent_id' => (empty($parentId) == true) ? null : $parentId,
+            'name'      => $name,
+            'type'      => $type,            
+            'user_id'   => $userId
         ],$this->resolveRole($role));
-       
+    
         return $this->create($data);           
     }
 
@@ -321,9 +337,12 @@ class Entity extends Model
                 $result['seller'] = 1; 
                 break;
             }           
+            case EntityInterface::ROLE_SHIPPING: {
+                $result['shipping'] = 1;
+                break;
+            }
         }
 
         return $result;
     }
-
 }

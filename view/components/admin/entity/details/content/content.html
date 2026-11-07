@@ -16,6 +16,14 @@
                 {{ component('system:admin.view.id',{ model: entity }) }}                   
             </td>
         </tr>
+        {% if entity.parent_id is not empty %}
+          <tr>
+            <td class="{{ theme.table.field.label }}">{{ labels.ho }}</td>
+            <td>
+                {{ entity.parent.name }}
+            </td>
+        </tr>
+        {% endif %}
         <tr>
             <td class="{{ theme.table.field.label }}">{{ labels.status }}</td>
             <td>
@@ -35,6 +43,16 @@
                 <div class="badge badge-sm badge-outline">
                     {{ entity.type }}
                 </div>
+                {% if entity.parent_id is empty %}
+                <div class="badge badge-sm badge-outline badge-primary">
+                    <span class="text-gray-800">{{ labels.ho }}</span>
+                </div>
+                {% else %}
+                <div class="badge badge-sm badge badge-primary">
+                    <span class="text-white">{{ labels.branch }}</span>
+                </div>
+                {% endif %}
+
             </td>
         </tr>
         <tr>
@@ -82,3 +100,9 @@
         {% endif %}
     </tbody>
 </table>    
+{% if entity.hasChild() == true %}
+    {{  component('entity::admin.entity.details.branches',{
+            entity: entity
+        }) 
+    }}
+{% endif %}

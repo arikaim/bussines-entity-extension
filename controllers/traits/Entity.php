@@ -30,7 +30,14 @@ trait Entity
         $role = $data->get('role','customer');
         $userId = (int)$data->get('user',$this->getUserId());
       
-        $entity = Model::Entity('entity')->createEntity($name,$type,$userId,$role);      
+        $model = Model::Entity('entity');
+
+        if ($model->hasEntity($name,$userId) == true) {
+            $this->error('errors.add','Error Entity with this name exist');
+            return null;
+        }
+
+        $entity = $model->createEntity($name,$type,$userId,$role);      
         if ($entity == null) {
             $this->error('errors.add','Error create entity');
             return null;

@@ -1,0 +1,54 @@
+{% if uuid is not empty %}
+    {% set item = createModel('Entity','entity').findById(uuid) %}
+{% endif %}
+
+<tr id="row_{{ item.uuid }}">        
+    <td>         
+        <button 
+            mountTo="entity_details"
+            component="entity::admin.entity.details"
+            params="uuid:{{ item.uuid }}"
+            class="{{ theme.buttons.icon }} entity-action">
+            {{ component('icons~info',theme.icons.menu,'svg') }}
+        </button>   
+        <button 
+            mountTo="entity_details"
+            component="entity::admin.entity.edit"
+            params="uuid:{{ item.uuid }}"
+            class="{{ theme.buttons.icon }} entity-action">
+            {{ component('icons~edit',theme.icons.menu,'svg') }}
+        </button>
+        <button 
+            class="{{ theme.buttons.icon }} delete-entity" 
+            uuid="{{ item.uuid }}" 
+            data-title="{{ item.name }}">
+            {{ component('icons~trash',theme.icons.delete,'svg') }}
+        </button>                        
+    </td>
+    <td>
+        {{  component('system:admin.status.dropdown',{ 
+                status: item.status, 
+                uuid: item.uuid, 
+                skip: [2,3,4,5,6] 
+            }) 
+        }} 
+    </td>
+    <td>{{ item.date_created|dateFormat }}</td>
+    <td>{{ item.name }}</td>
+    <td>
+        <div class="badge badge-sm badge-outline badge-info">
+            <span class="text-gray-800">{{ item.type }}</span>           
+        </div>   
+        {% if item.parent_id is empty and item.type !='person' %}
+        <div class="badge badge-sm badge-outline badge-primary">
+            <span class="text-gray-800">{{ labels.ho }}</span>
+        </div>
+        {% endif %}       
+        {% for role in item.roles %}
+        <div class="badge badge-sm badge-outline">
+            {{ role }}
+        </div>
+        {% endfor %}        
+    </td>   
+    <td>{{ item.user.user_name_or_email|default('..') }}</td>            
+</tr>
